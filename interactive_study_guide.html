@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE 160 Interactive Study Guide 🎓</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        .progress-container {
+            background: #f0f0f0;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #ddd;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .nav-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .nav-btn.completed {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+        
+        .lesson {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .lesson.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .lesson-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .lesson-header h2 {
+            margin-bottom: 10px;
+        }
+        
+        .lesson-intro {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .lesson-intro h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .teaching-section {
+            background: #f8f9ff;
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+        }
+        
+        .teaching-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .visual-demo {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .grid-visual {
+            display: grid;
+            gap: 5px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        
+        .grid-cell {
+            background: #e0e7ff;
+            border: 2px solid #667eea;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .grid-cell.highlight {
+            background: #ffd700;
+            border-color: #ff9800;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.5);
+        }
+        
+        .grid-cell.active {
+            background: #4caf50;
+            color: white;
+            border-color: #2e7d32;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        .code-line {
+            margin: 5px 0;
+        }
+        
+        .code-comment {
+            color: #6c9;
+        }
+        
+        .code-keyword {
+            color: #f92672;
+        }
+        
+        .code-function {
+            color: #66d9ef;
+        }
+        
+        .code-number {
+            color: #ae81ff;
+        }
+        
+        .interactive-example {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .interactive-example h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        
+        .input-group {
+            margin: 15px 0;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .input-group input, .input-group select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .result-box {
+            background: #f0f0f0;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            font-family: monospace;
+        }
+        
+        .result-box.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .result-box.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .explanation-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .explanation-box h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+        
+        .key-point {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .key-point strong {
+            color: #1565c0;
+        }
+        
+        .warning-box {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box strong {
+            color: #c62828;
+        }
+        
+        .analogy-box {
+            background: #f3e5f5;
+            border-left: 5px solid #9c27b0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .analogy-box h4 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+        }
+        
+        .step-by-step {
+            counter-reset: step;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+            padding-left: 70px;
+        }
+        
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .quiz-section {
+            background: #fce4ec;
+            border: 2px solid #e91e63;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .quiz-section h4 {
+            color: #c2185b;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-option {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+        
+        .quiz-option.selected {
+            border-color: #667eea;
+            background: #e0e7ff;
+        }
+        
+        .quiz-option.correct {
+            border-color: #4caf50;
+            background: #d4edda;
+        }
+        
+        .quiz-option.incorrect {
+            border-color: #f44336;
+            background: #f8d7da;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+        
+        .memory-hierarchy-visual {
+            margin: 20px 0;
+        }
+        
+        .memory-level {
+            background: #f0f0f0;
+            border-left: 5px solid #667eea;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .memory-level:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .speed-1 { border-left-color: #4caf50; background: #e8f5e9; }
+        .speed-2 { border-left-color: #8bc34a; background: #f1f8e9; }
+        .speed-3 { border-left-color: #ffc107; background: #fff3e0; }
+        .speed-4 { border-left-color: #ff5722; background: #fbe9e7; }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #667eea;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 20px;
+            width: 15px;
+            height: 15px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .matrix-visual {
+            display: inline-block;
+            margin: 10px;
+            vertical-align: top;
+        }
+        
+        .matrix-label {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #667eea;
+        }
+        
+        .matrix-grid {
+            display: grid;
+            gap: 2px;
+            background: #667eea;
+            padding: 2px;
+            border-radius: 5px;
+        }
+        
+        .matrix-cell {
+            background: #e0e7ff;
+            padding: 10px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 14px;
+            min-width: 40px;
+        }
+        
+        .matrix-cell.tile {
+            background: #ffd700;
+            font-weight: bold;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 5px;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .toggle-content {
+            display: none;
+            margin-top: 15px;
+        }
+        
+        .toggle-content.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        .toggle-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .toggle-btn:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSE 160 Interactive Study Guide 🎓</h1>
+        <p class="subtitle">Learn OpenCL & Parallel Programming Step-by-Step</p>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar">0% Complete</div>
+            </div>
+            <div class="progress-text" id="progressText">Start with Lesson 1 to begin your journey!</div>
+        </div>
+        
+        <div class="nav-buttons" id="navButtons"></div>
+        
+        <!-- LESSON 1: OpenCL Basics & The Execution Model -->
+        <div class="lesson" id="lesson1">
+            <div class="lesson-header">
+                <h2>📚 Lesson 1: OpenCL Basics & The Execution Model</h2>
+                <p>Understanding the foundation: How GPU programming actually works</p>
+            </div>
+            
+            <div class="lesson-intro">
+                <h3>🎯 What You'll Learn</h3>
+                <p>By the end of this lesson, you'll understand:</p>
+                <ul>
+                    <li>What work-items and work-groups are (and why they matter)</li>
+                    <li>How to think about parallel execution</li>
+                    <li>What each OpenCL function tells you</li>
+                    <li>How to calculate thread IDs</li>
+                </ul>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>The Big Picture: Why GPU Programming is Different</h3>
+                
+                <div class="analogy-box">
+                    <h4>🏭 Think of it Like a Factory</h4>
+                    <p><strong>CPU Programming:</strong> You have one super skilled worker who does tasks one at a time, very fast.</p>
+                    <p><strong>GPU Programming:</strong> You have thousands of workers who all do simple tasks simultaneously. None are as skilled as the CPU worker, but together they're incredibly powerful.</p>
+                </div>
+                
+                <p>In OpenCL, we organize these "workers" in a specific way:</p>
+                
+                <div class="step-by-step">
+                    <div class="step">
+                        <strong>Work-Item (Thread)</strong>
+                        <p>The individual worker. Each one executes the same program but on different data. Think: "I'm worker #53, so I process element #53 of the array."</p>
+                    </div>
+                    
+                    <div class="step">
+                        <strong>Work-Group (Block)</strong>
+                        <p>A team of workers. They can share a workspace (local memory) and coordinate with each other. Typically 64-256 workers per team.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <strong>NDRange (Grid)</strong>
+                        <p>The entire workforce. All teams working on the complete job. Can be 1D (a line), 2D (a grid), or 3D (a cube) depending on your problem.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>Understanding Work-Item IDs</h3>
+                
+                <p>Every work-item needs to know: "Which piece of data should I process?" This is determined by its ID.</p>
+                
+                <div class="visual-demo">
+                    <h4>Interactive: Understanding IDs</h4>
+                    <p>Let's visualize a 1D grid with 32 work-items organized into 2 work-groups of 16 each:</p>
+                    
+                    <div class="grid-visual" style="grid-template-columns: repeat(16, 1fr); max-width: 800px;">
+                        <!-- Work-group 0 -->
+                        <div class="grid-cell" style="grid-column: 1/-1; background: #e0e7ff; margin-bottom: 10px; font-weight: bold;">Work-Group 0</div>
+                        <div class="grid-cell" data-global="0" data-local="0" data-group="0">g:0<br>l:0<br>b:0</div>
+                        <div class="grid-cell" data-global="1" data-local="1" data-group="0">g:1<br>l:1<br>b:0</div>
+                        <div class="grid-cell" data-global="2" data-local="2" data-group="0">g:2<br>l:2<br>b:0</div>
+                        <div class="grid-cell" data-global="3" data-local="3" data-group="0">g:3<br>l:3<br>b:0</div>
+                        <div class="grid-cell" data-global="4" data-local="4" data-group="0">g:4<br>l:4<br>b:0</div>
+                        <div class="grid-cell" data-global="5" data-local="5" data-group="0">g:5<br>l:5<br>b:0</div>
+                        <div class="grid-cell" data-global="6" data-local="6" data-group="0">g:6<br>l:6<br>b:0</div>
+                        <div class="grid-cell" data-global="7" data-local="7" data-group="0">g:7<br>l:7<br>b:0</div>
+                        <div class="grid-cell" data-global="8" data-local="8" data-group="0">g:8<br>l:8<br>b:0</div>
+                        <div class="grid-cell" data-global="9" data-local="9" data-group="0">g:9<br>l:9<br>b:0</div>
+                        <div class="grid-cell" data-global="10" data-local="10" data-group="0">g:10<br>l:10<br>b:0</div>
+                        <div class="grid-cell" data-global="11" data-local="11" data-group="0">g:11<br>l:11<br>b:0</div>
+                        <div class="grid-cell" data-global="12" data-local="12" data-group="0">g:12<br>l:12<br>b:0</div>
+                        <div class="grid-cell" data-global="13" data-local="13" data-group="0">g:13<br>l:13<br>b:0</div>
+                        <div class="grid-cell" data-global="14" data-local="14" data-group="0">g:14<br>l:14<br>b:0</div>
+                        <div class="grid-cell" data-global="15" data-local="15" data-group="0">g:15<br>l:15<br>b:0</div>
+                    </div>
+                    
+                    <div class="grid-visual" style="grid-template-columns: repeat(16, 1fr); max-width: 800px; margin-top: 20px;">
+                        <!-- Work-group 1 -->
+                        <div class="grid-cell" style="grid-column: 1/-1; background: #e0e7ff; margin-bottom: 10px; font-weight: bold;">Work-Group 1</div>
+                        <div class="grid-cell" data-global="16" data-local="0" data-group="1">g:16<br>l:0<br>b:1</div>
+                        <div class="grid-cell" data-global="17" data-local="1" data-group="1">g:17<br>l:1<br>b:1</div>
+                        <div class="grid-cell" data-global="18" data-local="2" data-group="1">g:18<br>l:2<br>b:1</div>
+                        <div class="grid-cell" data-global="19" data-local="3" data-group="1">g:19<br>l:3<br>b:1</div>
+                        <div class="grid-cell" data-global="20" data-local="4" data-group="1">g:20<br>l:4<br>b:1</div>
+                        <div class="grid-cell" data-global="21" data-local="5" data-group="1">g:21<br>l:5<br>b:1</div>
+                        <div class="grid-cell" data-global="22" data-local="6" data-group="1">g:22<br>l:6<br>b:1</div>
+                        <div class="grid-cell" data-global="23" data-local="7" data-group="1">g:23<br>l:7<br>b:1</div>
+                        <div class="grid-cell" data-global="24" data-local="8" data-group="1">g:24<br>l:8<br>b:1</div>
+                        <div class="grid-cell" data-global="25" data-local="9" data-group="1">g:25<br>l:9<br>b:1</div>
+                        <div class="grid-cell" data-global="26" data-local="10" data-group="1">g:26<br>l:10<br>b:1</div>
+                        <div class="grid-cell" data-global="27" data-local="11" data-group="1">g:27<br>l:11<br>b:1</div>
+                        <div class="grid-cell" data-global="28" data-local="12" data-group="1">g:28<br>l:12<br>b:1</div>
+                        <div class="grid-cell" data-global="29" data-local="13" data-group="1">g:29<br>l:13<br>b:1</div>
+                        <div class="grid-cell" data-global="30" data-local="14" data-group="1">g:30<br>l:14<br>b:1</div>
+                        <div class="grid-cell" data-global="31" data-local="15" data-group="1">g:31<br>l:15<br>b:1</div>
+                    </div>
+                    
+                    <p style="margin-top: 15px;"><small>g = global_id, l = local_id, b = group_id</small></p>
+                    
+                    <div class="input-group">
+                        <label>Click a cell to see its IDs, or enter a global ID:</label>
+                        <input type="number" id="globalIdInput" min="0" max="31" value="0" style="max-width: 100px;">
+                        <button class="btn" onclick="highlightCell()">Show This Thread</button>
+                    </div>
+                    
+                    <div class="result-box" id="idResult" style="display: none;"></div>
+                </div>
+                
+                <div class="key-point">
+                    <strong>🔑 Key Insight:</strong> Notice how local_id resets to 0 in each work-group, but global_id keeps counting. This is crucial for understanding how threads find their data!
+                </div>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>The Golden Formula</h3>
+                
+                <p>The most important equation in this entire course:</p>
+                
+                <div class="code-block">
+global_id = group_id × local_size + local_id
+                </div>
+                
+                <div class="explanation-box">
+                    <h4>Why This Formula Works</h4>
+                    <p>Think about it in parts:</p>
+                    <ul>
+                        <li><strong>group_id × local_size</strong> = How many work-items are in ALL previous groups?</li>
+                        <li><strong>+ local_id</strong> = Add your position within YOUR group</li>
+                        <li><strong>= global_id</strong> = Your unique position across ALL work-items!</li>
+                    </ul>
+                </div>
+                
+                <div class="interactive-example">
+                    <h4>🧮 Practice: Calculate Global ID</h4>
+                    
+                    <div class="input-group">
+                        <label>Work-Group ID (which team):</label>
+                        <input type="number" id="calcGroupId" value="3" min="0" max="100">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Local Size (team size):</label>
+                        <input type="number" id="calcLocalSize" value="16" min="1" max="1024">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Local ID (your position in team):</label>
+                        <input type="number" id="calcLocalId" value="7" min="0" max="1023">
+                    </div>
+                    
+                    <button class="btn" onclick="calculateGlobalId()">Calculate My Global ID</button>
+                    <button class="btn btn-secondary" onclick="randomizeCalc()">Random Example</button>
+                    
+                    <div class="result-box" id="calcResult" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>OpenCL Functions Cheat Sheet</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Function</th>
+                            <th>Returns</th>
+                            <th>Example</th>
+                            <th>Think of it as...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>get_global_id(0)</code></td>
+                            <td>Your unique ID</td>
+                            <td>Returns: 0 to N-1</td>
+                            <td>"What's my employee number?"</td>
+                        </tr>
+                        <tr>
+                            <td><code>get_local_id(0)</code></td>
+                            <td>Your position in your team</td>
+                            <td>Returns: 0 to (team_size-1)</td>
+                            <td>"What's my position on my team?"</td>
+                        </tr>
+                        <tr>
+                            <td><code>get_group_id(0)</code></td>
+                            <td>Which team you're on</td>
+                            <td>Returns: 0 to (num_teams-1)</td>
+                            <td>"Which team am I on?"</td>
+                        </tr>
+                        <tr>
+                            <td><code>get_local_size(0)</code></td>
+                            <td>How big is your team</td>
+                            <td>Returns: team size (e.g. 128)</td>
+                            <td>"How many people on my team?"</td>
+                        </tr>
+                        <tr>
+                            <td><code>get_global_size(0)</code></td>
+                            <td>Total workers</td>
+                            <td>Returns: total work-items</td>
+                            <td>"How many total employees?"</td>
+                        </tr>
+                        <tr>
+                            <td><code>get_num_groups(0)</code></td>
+                            <td>Total teams</td>
+                            <td>Returns: number of work-groups</td>
+                            <td>"How many teams total?"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="quiz-section">
+                <h4>✅ Quick Check: Test Your Understanding</h4>
+                <p><strong>Question:</strong> You have a work-group size of 128. You're in work-group 5, and your local_id is 32. What's your global_id?</p>
+                
+                <div class="quiz-option" onclick="checkQuiz1(this, false)">A) 160</div>
+                <div class="quiz-option" onclick="checkQuiz1(this, false)">B) 537</div>
+                <div class="quiz-option" onclick="checkQuiz1(this, true)">C) 672</div>
+                <div class="quiz-option" onclick="checkQuiz1(this, false)">D) 165</div>
+                
+                <div class="toggle-content" id="quiz1-explanation">
+                    <div class="explanation-box">
+                        <h4>💡 Explanation</h4>
+                        <p><strong>Using the formula:</strong> global_id = group_id × local_size + local_id</p>
+                        <p>global_id = 5 × 128 + 32 = 640 + 32 = <strong>672</strong> ✓</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" disabled>← Previous Lesson</button>
+                <button class="btn" onclick="goToLesson(2)">Next Lesson: Indexing Magic →</button>
+            </div>
+        </div>
+        
+        <!-- LESSON 2: Thread Indexing & 2D Grids -->
+        <div class="lesson" id="lesson2">
+            <div class="lesson-header">
+                <h2>📊 Lesson 2: Thread Indexing & 2D Grids</h2>
+                <p>Master the art of finding which data each thread should process</p>
+            </div>
+            
+            <div class="lesson-intro">
+                <h3>🎯 What You'll Learn</h3>
+                <ul>
+                    <li>How 2D indexing works for matrices and images</li>
+                    <li>Row-major vs column-major memory layout</li>
+                    <li>How to calculate grid sizes (the ceiling division trick)</li>
+                    <li>Why boundary checking matters</li>
+                </ul>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>Why 2D? The Image/Matrix Problem</h3>
+                
+                <div class="analogy-box">
+                    <h4>🖼️ Real-World Example</h4>
+                    <p>Imagine you need to process a 1920×1080 image. That's over 2 million pixels! Each pixel needs work done on it. How do you organize your workers?</p>
+                    <p><strong>Option 1D:</strong> Line up 2 million workers in a row. Worker #1,234,567 processes pixel #1,234,567.</p>
+                    <p><strong>Option 2D:</strong> Organize workers in a 1920×1080 grid. Worker at position (row=500, col=800) processes the pixel at row 500, column 800.</p>
+                    <p>Option 2D is WAY more natural for grid-like data!</p>
+                </div>
+                
+                <div class="visual-demo">
+                    <h4>2D Grid Visualization</h4>
+                    <p>Here's a small 8×8 grid of work-items. Click any cell to see how 2D coordinates work:</p>
+                    
+                    <div id="grid2d" class="grid-visual" style="grid-template-columns: repeat(8, 1fr); max-width: 400px; margin: 20px auto;"></div>
+                    
+                    <div class="result-box" id="grid2dResult" style="display: none;"></div>
+                </div>
+                
+                <div class="code-block">
+<span class="code-comment">// 2D Indexing in OpenCL</span>
+<span class="code-keyword">int</span> row = <span class="code-function">get_global_id</span>(<span class="code-number">1</span>);  <span class="code-comment">// Y dimension</span>
+<span class="code-keyword">int</span> col = <span class="code-function">get_global_id</span>(<span class="code-number">0</span>);  <span class="code-comment">// X dimension</span>
+
+<span class="code-comment">// Convert to 1D array index (row-major)</span>
+<span class="code-keyword">int</span> index = row * width + col;
+                </div>
+                
+                <div class="key-point">
+                    <strong>🔑 Remember:</strong> Dimension 0 = X = columns, Dimension 1 = Y = rows. This can be confusing because row comes from dimension 1!
+                </div>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>Row-Major Memory Layout (CRITICAL CONCEPT)</h3>
+                
+                <p>Computers store 2D data in 1D memory. You need to understand how!</p>
+                
+                <div class="visual-demo">
+                    <h4>How a 3×4 Matrix is Stored in Memory</h4>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div class="matrix-visual">
+                            <div class="matrix-label">Matrix View</div>
+                            <div class="matrix-grid" style="grid-template-columns: repeat(4, 1fr);">
+                                <div class="matrix-cell">1</div>
+                                <div class="matrix-cell">2</div>
+                                <div class="matrix-cell">3</div>
+                                <div class="matrix-cell">4</div>
+                                <div class="matrix-cell">5</div>
+                                <div class="matrix-cell">6</div>
+                                <div class="matrix-cell">7</div>
+                                <div class="matrix-cell">8</div>
+                                <div class="matrix-cell">9</div>
+                                <div class="matrix-cell">10</div>
+                                <div class="matrix-cell">11</div>
+                                <div class="matrix-cell">12</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin: 20px; font-size: 24px;">↓</div>
+                        
+                        <div class="matrix-visual">
+                            <div class="matrix-label">Memory Layout (Row-Major)</div>
+                            <div class="matrix-grid" style="grid-template-columns: repeat(12, 1fr);">
+                                <div class="matrix-cell" style="background: #ffcdd2;">1</div>
+                                <div class="matrix-cell" style="background: #ffcdd2;">2</div>
+                                <div class="matrix-cell" style="background: #ffcdd2;">3</div>
+                                <div class="matrix-cell" style="background: #ffcdd2;">4</div>
+                                <div class="matrix-cell" style="background: #c8e6c9;">5</div>
+                                <div class="matrix-cell" style="background: #c8e6c9;">6</div>
+                                <div class="matrix-cell" style="background: #c8e6c9;">7</div>
+                                <div class="matrix-cell" style="background: #c8e6c9;">8</div>
+                                <div class="matrix-cell" style="background: #bbdefb;">9</div>
+                                <div class="matrix-cell" style="background: #bbdefb;">10</div>
+                                <div class="matrix-cell" style="background: #bbdefb;">11</div>
+                                <div class="matrix-cell" style="background: #bbdefb;">12</div>
+                            </div>
+                            <div style="margin-top: 10px; font-size: 12px;">
+                                <span style="color: #d32f2f;">■ Row 0</span>
+                                <span style="color: #388e3c; margin-left: 10px;">■ Row 1</span>
+                                <span style="color: #1976d2; margin-left: 10px;">■ Row 2</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <h4>The Formula</h4>
+                        <p>To access element at (row, col) in a matrix with W columns:</p>
+                        <div class="code-block" style="background: white; color: #333; border: 2px solid #667eea;">
+index = row × W + col
+                        </div>
+                        <p><strong>Why?</strong></p>
+                        <ul>
+                            <li><strong>row × W</strong> = Skip all previous rows (each row has W elements)</li>
+                            <li><strong>+ col</strong> = Move to the right column within that row</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="interactive-example">
+                    <h4>🧮 Practice: Matrix Indexing</h4>
+                    
+                    <div class="input-group">
+                        <label>Matrix width (columns):</label>
+                        <input type="number" id="matrixWidth" value="5" min="1" max="20">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Access row:</label>
+                        <input type="number" id="matrixRow" value="2" min="0" max="19">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Access column:</label>
+                        <input type="number" id="matrixCol" value="3" min="0" max="19">
+                    </div>
+                    
+                    <button class="btn" onclick="calculateMatrixIndex()">Calculate Index</button>
+                    
+                    <div class="result-box" id="matrixIndexResult" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>Grid Sizing: The Ceiling Division Trick</h3>
+                
+                <p>One of the trickiest parts: How many work-groups do you need?</p>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Common Mistake:</strong> Using regular division!
+                    <div class="code-block">
+<span class="code-comment">// ❌ WRONG - might not process all elements!</span>
+num_groups = N / block_size;  <span class="code-comment">// Floor division</span>
+
+<span class="code-comment">// ✅ CORRECT - ceiling division</span>
+num_groups = (N + block_size - <span class="code-number">1</span>) / block_size;
+                    </div>
+                </div>
+                
+                <div class="explanation-box">
+                    <h4>Why This Works</h4>
+                    <p>Let's say N = 1000, block_size = 256:</p>
+                    <ul>
+                        <li><strong>Wrong way:</strong> 1000 / 256 = 3 (floor) = 768 work-items. <strong>We miss 232 elements!</strong></li>
+                        <li><strong>Right way:</strong> (1000 + 255) / 256 = 1255 / 256 = 4 (floor) = 1024 work-items. ✓</li>
+                    </ul>
+                    <p>The extra threads (1024 - 1000 = 24) just need boundary checks to not process invalid data.</p>
+                </div>
+                
+                <div class="interactive-example">
+                    <h4>🧮 Grid Size Calculator</h4>
+                    
+                    <div class="input-group">
+                        <label>Total elements to process (N):</label>
+                        <input type="number" id="totalElements" value="1000" min="1" max="1000000">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Work-group size (block_size):</label>
+                        <input type="number" id="blockSize" value="256" min="1" max="1024">
+                    </div>
+                    
+                    <button class="btn" onclick="calculateGridSize()">Calculate Grid Size</button>
+                    
+                    <div class="result-box" id="gridSizeResult" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <div class="quiz-section">
+                <h4>✅ Quick Check: 2D Indexing</h4>
+                <p><strong>Question:</strong> You have a 100×100 matrix. You want to access the element at row 25, column 75. What's the 1D array index?</p>
+                
+                <div class="quiz-option" onclick="checkQuiz2(this, false)">A) 7525</div>
+                <div class="quiz-option" onclick="checkQuiz2(this, true)">B) 2575</div>
+                <div class="quiz-option" onclick="checkQuiz2(this, false)">C) 100</div>
+                <div class="quiz-option" onclick="checkQuiz2(this, false)">D) 5075</div>
+                
+                <div class="toggle-content" id="quiz2-explanation">
+                    <div class="explanation-box">
+                        <h4>💡 Explanation</h4>
+                        <p><strong>Using the formula:</strong> index = row × width + col</p>
+                        <p>index = 25 × 100 + 75 = 2500 + 75 = <strong>2575</strong> ✓</p>
+                        <p>You skip 25 complete rows (25 × 100 = 2500 elements), then move 75 columns to the right.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="goToLesson(1)">← Previous: Basics</button>
+                <button class="btn" onclick="goToLesson(3)">Next Lesson: Memory & Speed →</button>
+            </div>
+        </div>
+        
+        <!-- LESSON 3: Memory Hierarchy & Barriers -->
+        <div class="lesson" id="lesson3">
+            <div class="lesson-header">
+                <h2>💾 Lesson 3: Memory Hierarchy & Synchronization</h2>
+                <p>Understanding the speed pyramid and when threads need to wait</p>
+            </div>
+            
+            <div class="lesson-intro">
+                <h3>🎯 What You'll Learn</h3>
+                <ul>
+                    <li>The memory hierarchy: Private → Local → Global</li>
+                    <li>Why local memory is ~100x faster than global</li>
+                    <li>What barriers are and when you MUST use them</li>
+                    <li>How to avoid deadlocks</li>
+                </ul>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>The Memory Speed Pyramid</h3>
+                
+                <div class="analogy-box">
+                    <h4>🏢 Office Building Analogy</h4>
+                    <p><strong>Private Memory (Registers):</strong> Items on your desk. Instant access, but tiny space, only YOU can use it.</p>
+                    <p><strong>Local Memory (Shared):</strong> Shared filing cabinet for your team. Fast access, limited space, your whole team can use it.</p>
+                    <p><strong>Global Memory (DRAM):</strong> Warehouse across town. Huge storage, but slow to access, everyone in the company uses it.</p>
+                    <p><strong>Constant Memory:</strong> Printed handbook. Read-only, cached for speed, same for everyone.</p>
+                </div>
+                
+                <div class="memory-hierarchy-visual">
+                    <div class="memory-level speed-1">
+                        <strong>🚀 Private Memory (Fastest)</strong>
+                        <p>• Each work-item's registers</p>
+                        <p>• Tiny (~few KB per work-item)</p>
+                        <p>• Access time: ~1 cycle</p>
+                        <p>• Usage: Local variables automatically go here</p>
+                    </div>
+                    
+                    <div class="memory-level speed-2">
+                        <strong>⚡ Local Memory (Very Fast)</strong>
+                        <p>• Shared within work-group</p>
+                        <p>• Small (~16-64 KB per work-group)</p>
+                        <p>• Access time: ~10 cycles</p>
+                        <p>• Usage: Declare with __local keyword</p>
+                    </div>
+                    
+                    <div class="memory-level speed-3">
+                        <strong>🐢 Global Memory (Slow)</strong>
+                        <p>• Accessible by all work-items</p>
+                        <p>• Huge (several GB)</p>
+                        <p>• Access time: ~400-800 cycles</p>
+                        <p>• Usage: Main data storage (__global)</p>
+                    </div>
+                    
+                    <div class="memory-level speed-4">
+                        <strong>📖 Constant Memory (Cached)</strong>
+                        <p>• Read-only</p>
+                        <p>• Small (~64 KB)</p>
+                        <p>• Access time: ~1-10 cycles (if cached)</p>
+                        <p>• Usage: Parameters (__constant)</p>
+                    </div>
+                </div>
+                
+                <div class="key-point">
+                    <strong>🔑 The Big Idea:</strong> The whole point of tiling and optimization is to load data from slow global memory into fast local memory, then reuse it many times!
+                </div>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>Barriers: The Coordination Checkpoint</h3>
+                
+                <p>Barriers are synchronization points. ALL work-items in a work-group must reach the barrier before ANY can proceed.</p>
+                
+                <div class="visual-demo">
+                    <h4>Interactive: Barrier Demonstration</h4>
+                    <p>Watch how threads synchronize at a barrier:</p>
+                    
+                    <div id="barrierDemo" style="margin: 20px 0;">
+                        <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; max-width: 400px; margin: 20px auto;">
+                            <div class="grid-cell" id="thread0" style="background: #4caf50; color: white;">T0<br>✓</div>
+                            <div class="grid-cell" id="thread1" style="background: #e0e7ff;">T1</div>
+                            <div class="grid-cell" id="thread2" style="background: #e0e7ff;">T2</div>
+                            <div class="grid-cell" id="thread3" style="background: #e0e7ff;">T3</div>
+                            <div class="grid-cell" id="thread4" style="background: #e0e7ff;">T4</div>
+                            <div class="grid-cell" id="thread5" style="background: #e0e7ff;">T5</div>
+                            <div class="grid-cell" id="thread6" style="background: #e0e7ff;">T6</div>
+                            <div class="grid-cell" id="thread7" style="background: #e0e7ff;">T7</div>
+                        </div>
+                        <p style="text-align: center; color: #666;" id="barrierStatus">Threads arriving at barrier...</p>
+                        <div style="text-align: center;">
+                            <button class="btn" onclick="startBarrierDemo()">Start Demo</button>
+                            <button class="btn btn-secondary" onclick="resetBarrierDemo()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-by-step">
+                    <div class="step">
+                        <strong>Phase 1: Loading Data</strong>
+                        <p>Each thread loads its data into shared memory</p>
+                        <div class="code-block">
+shared[<span class="code-function">get_local_id</span>(<span class="code-number">0</span>)] = input[<span class="code-function">get_global_id</span>(<span class="code-number">0</span>)];
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <strong>Phase 2: BARRIER</strong>
+                        <p>Wait for ALL threads to finish loading!</p>
+                        <div class="code-block">
+<span class="code-function">barrier</span>(CLK_LOCAL_MEM_FENCE);  <span class="code-comment">// ⚠️ Everyone waits here!</span>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <strong>Phase 3: Using Data</strong>
+                        <p>Now it's safe to read what other threads wrote</p>
+                        <div class="code-block">
+<span class="code-keyword">float</span> neighbor = shared[<span class="code-function">get_local_id</span>(<span class="code-number">0</span>) + <span class="code-number">1</span>];  <span class="code-comment">// Safe!</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ THE DEADLOCK TRAP</strong>
+                    <div class="code-block">
+<span class="code-comment">// ❌ DEADLOCK! Never put barrier in conditional!</span>
+<span class="code-keyword">if</span> (<span class="code-function">get_local_id</span>(<span class="code-number">0</span>) < <span class="code-number">10</span>) {
+    <span class="code-function">barrier</span>(CLK_LOCAL_MEM_FENCE);  <span class="code-comment">// Only threads 0-9 hit this!</span>
+}
+<span class="code-comment">// Threads 10+ never reach barrier, threads 0-9 wait forever ☠️</span>
+
+<span class="code-comment">// ✅ CORRECT - everyone hits the barrier</span>
+<span class="code-keyword">if</span> (<span class="code-function">get_local_id</span>(<span class="code-number">0</span>) < <span class="code-number">10</span>) {
+    <span class="code-comment">// do special work</span>
+}
+<span class="code-function">barrier</span>(CLK_LOCAL_MEM_FENCE);  <span class="code-comment">// All threads hit this ✓</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="teaching-section">
+                <h3>When Do You Need a Barrier?</h3>
+                
+                <p>Use this simple checklist:</p>
+                
+                <div class="explanation-box">
+                    <h4>The 3 Questions</h4>
+                    <ol>
+                        <li>Does Thread A write to shared (__local) memory?</li>
+                        <li>Does Thread B read from that same location?</li>
+                        <li>Could Thread B read before Thread A finishes writing?</li>
+                    </ol>
+                    <p><strong>If YES to all three → YOU NEED A BARRIER!</strong></p>
+                </div>
+                
+                <div class="interactive-example">
+                    <h4>🧮 Practice: Find the Bug</h4>
+                    <p>This code has a race condition. Can you spot where the barrier should go?</p>
+                    
+                    <div class="code-block">
+<span class="code-keyword">__local float</span> data[<span class="code-number">256</span>];
+<span class="code-keyword">int</span> tid = <span class="code-function">get_local_id</span>(<span class="code-number">0</span>);
+
+<span class="code-comment">// Step 1: Everyone loads their data</span>
+data[tid] = input[<span class="code-function">get_global_id</span>(<span class="code-number">0</span>)];
+
+<span class="code-comment">// Step 2: Sum with neighbor - BUG HERE! 🐛</span>
+<span class="code-keyword">if</span> (tid > <span class="code-number">0</span>) {
+    <span class="code-keyword">float</span> sum = data[tid] + data[tid - <span class="code-number">1</span>];
+}
+                    </div>
+                    
+                    <button class="toggle-btn" onclick="document.getElementById('barrierBug').classList.toggle('show')">Show Solution</button>
+                    
+                    <div class="toggle-content" id="barrierBug">
+                        <div class="explanation-box">
+                            <h4>💡 Solution</h4>
+                            <p><strong>The Problem:</strong> Thread 1 tries to read data[0], but Thread 0 might not have written it yet!</p>
+                            <p><strong>The Fix:</strong></p>
+                            <div class="code-block">
+data[tid] = input[<span class="code-function">get_global_id</span>(<span class="code-number">0</span>)];
+
+<span class="code-function">barrier</span>(CLK_LOCAL_MEM_FENCE);  <span class="code-comment">// ⚠️ Add barrier here!</span>
+
+<span class="code-keyword">if</span> (tid > <span class="code-number">0</span>) {
+    <span class="code-keyword">float</span> sum = data[tid] + data[tid - <span class="code-number">1</span>];  <span class="code-comment">// Now safe!</span>
+}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quiz-section">
+                <h4>✅ Quick Check: Barriers</h4>
+                <p><strong>Question:</strong> Which code snippet REQUIRES a barrier?</p>
+                
+                <div class="quiz-option" onclick="checkQuiz3(this, false)">
+                    <strong>A)</strong>
+                    <pre style="margin: 5px 0;">float temp = data[tid];
+result[tid] = temp * 2;</pre>
+                </div>
+                
+                <div class="quiz-option" onclick="checkQuiz3(this, true)">
+                    <strong>B)</strong>
+                    <pre style="margin: 5px 0;">shared[tid] = data[tid];
+float sum = shared[tid] + shared[tid+1];</pre>
+                </div>
+                
+                <div class="quiz-option" onclick="checkQuiz3(this, false)">
+                    <strong>C)</strong>
+                    <pre style="margin: 5px 0;">int x = get_global_id(0);
+output[x] = input[x] + 1;</pre>
+                </div>
+                
+                <div class="toggle-content" id="quiz3-explanation">
+                    <div class="explanation-box">
+                        <h4>💡 Explanation</h4>
+                        <p><strong>Answer B needs a barrier!</strong></p>
+                        <p>Thread tid writes to shared[tid], then thread tid tries to read shared[tid+1] which was written by thread tid+1. Without a barrier, the read might happen before the write!</p>
+                        <p>The correct code:</p>
+                        <pre>shared[tid] = data[tid];
+barrier(CLK_LOCAL_MEM_FENCE);  // ← Need this!
+float sum = shared[tid] + shared[tid+1];</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="goToLesson(2)">← Previous: Indexing</button>
+                <button class="btn" onclick="goToLesson(4)">Next Lesson: Tiled MatMul →</button>
+            </div>
+        </div>
+        
+        <!-- Add more lessons here... -->
+        
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd;">
+            <p style="color: #666;">💪 Keep going! You're doing great!</p>
+            <p style="color: #999; font-size: 0.9em;">More lessons coming as you progress...</p>
+        </div>
+    </div>
+    
+    <script>
+        const lessons = [
+            { id: 1, name: 'OpenCL Basics', emoji: '📚' },
+            { id: 2, name: 'Indexing', emoji: '📊' },
+            { id: 3, name: 'Memory & Barriers', emoji: '💾' },
+            { id: 4, name: 'Tiled MatMul', emoji: '🔲' },
+            { id: 5, name: 'Performance', emoji: '⚡' },
+        ];
+        
+        let completedLessons = new Set();
+        let currentLesson = 1;
+        
+        // Initialize navigation
+        function initNav() {
+            const navButtons = document.getElementById('navButtons');
+            lessons.forEach(lesson => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-btn';
+                btn.textContent = `${lesson.emoji} ${lesson.name}`;
+                btn.onclick = () => goToLesson(lesson.id);
+                if (lesson.id === 1) btn.classList.add('active');
+                navButtons.appendChild(btn);
+            });
+        }
+        
+        function goToLesson(lessonId) {
+            // Hide all lessons
+            document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+            
+            // Show target lesson
+            document.getElementById(`lesson${lessonId}`).classList.add('active');
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
+                btn.classList.remove('active');
+                if (idx + 1 === lessonId) btn.classList.add('active');
+            });
+            
+            // Mark previous lesson as completed
+            if (currentLesson < lessonId) {
+                completedLessons.add(currentLesson);
+                updateProgress();
+            }
+            
+            currentLesson = lessonId;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function updateProgress() {
+            const progress = (completedLessons.size / lessons.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressBar').textContent = Math.round(progress) + '% Complete';
+            
+            if (completedLessons.size === 0) {
+                document.getElementById('progressText').textContent = 'Start with Lesson 1 to begin!';
+            } else if (completedLessons.size === lessons.length) {
+                document.getElementById('progressText').textContent = '🎉 All lessons completed! You\'re ready!';
+            } else {
+                document.getElementById('progressText').textContent = `${completedLessons.size} of ${lessons.length} lessons completed`;
+            }
+            
+            // Update nav button completed status
+            document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
+                if (completedLessons.has(idx + 1)) {
+                    btn.classList.add('completed');
+                }
+            });
+        }
+        
+        // Lesson 1: Grid visualization
+        function highlightCell() {
+            const globalId = parseInt(document.getElementById('globalIdInput').value);
+            const cells = document.querySelectorAll('.grid-cell');
+            
+            cells.forEach(cell => {
+                cell.classList.remove('highlight');
+                if (parseInt(cell.dataset.global) === globalId) {
+                    cell.classList.add('highlight');
+                    showIdInfo(cell);
+                }
+            });
+        }
+        
+        function showIdInfo(cell) {
+            const result = document.getElementById('idResult');
+            result.style.display = 'block';
+            result.className = 'result-box correct';
+            result.innerHTML = `
+                <strong>Thread Information:</strong><br>
+                Global ID: ${cell.dataset.global}<br>
+                Local ID: ${cell.dataset.local}<br>
+                Group ID: ${cell.dataset.group}<br><br>
+                <em>This thread would process element ${cell.dataset.global} of the array!</em>
+            `;
+        }
+        
+        // Click handler for grid cells
+        document.addEventListener('DOMContentLoaded', function() {
+            initNav();
+            
+            setTimeout(() => {
+                const cells = document.querySelectorAll('.grid-cell');
+                cells.forEach(cell => {
+                    if (cell.dataset.global) {
+                        cell.addEventListener('click', function() {
+                            document.getElementById('globalIdInput').value = this.dataset.global;
+                            highlightCell();
+                        });
+                    }
+                });
+            }, 100);
+        });
+        
+        function calculateGlobalId() {
+            const groupId = parseInt(document.getElementById('calcGroupId').value);
+            const localSize = parseInt(document.getElementById('calcLocalSize').value);
+            const localId = parseInt(document.getElementById('calcLocalId').value);
+            
+            const globalId = groupId * localSize + localId;
+            
+            const result = document.getElementById('calcResult');
+            result.style.display = 'block';
+            result.className = 'result-box correct';
+            result.innerHTML = `
+                <strong>Calculation:</strong><br>
+                global_id = group_id × local_size + local_id<br>
+                global_id = ${groupId} × ${localSize} + ${localId}<br>
+                global_id = ${groupId * localSize} + ${localId}<br>
+                <strong>global_id = ${globalId}</strong><br><br>
+                <em>This thread processes element ${globalId} of the array!</em>
+            `;
+        }
+        
+        function randomizeCalc() {
+            document.getElementById('calcGroupId').value = Math.floor(Math.random() * 10);
+            document.getElementById('calcLocalSize').value = [16, 32, 64, 128, 256][Math.floor(Math.random() * 5)];
+            document.getElementById('calcLocalId').value = Math.floor(Math.random() * 16);
+            calculateGlobalId();
+        }
+        
+        function checkQuiz1(element, correct) {
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                opt.style.pointerEvents = 'none';
+            });
+            
+            if (correct) {
+                element.classList.add('correct');
+                document.getElementById('quiz1-explanation').classList.add('show');
+            } else {
+                element.classList.add('incorrect');
+                // Find and highlight correct answer
+                options.forEach(opt => {
+                    if (opt.textContent.includes('C) 672')) {
+                        opt.classList.add('correct');
+                    }
+                });
+                document.getElementById('quiz1-explanation').classList.add('show');
+            }
+        }
+        
+        // Lesson 2: 2D Grid
+        function init2DGrid() {
+            const grid = document.getElementById('grid2d');
+            if (!grid) return;
+            
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    cell.textContent = `${row},${col}`;
+                    cell.style.fontSize = '10px';
+                    cell.onclick = function() {
+                        show2DInfo(this);
+                    };
+                    grid.appendChild(cell);
+                }
+            }
+        }
+        
+        setTimeout(init2DGrid, 200);
+        
+        function show2DInfo(cell) {
+            const row = cell.dataset.row;
+            const col = cell.dataset.col;
+            const index = row * 8 + col;
+            
+            document.querySelectorAll('#grid2d .grid-cell').forEach(c => c.classList.remove('highlight'));
+            cell.classList.add('highlight');
+            
+            const result = document.getElementById('grid2dResult');
+            result.style.display = 'block';
+            result.className = 'result-box correct';
+            result.innerHTML = `
+                <strong>2D Position: (${row}, ${col})</strong><br>
+                Row (dimension 1): ${row}<br>
+                Column (dimension 0): ${col}<br><br>
+                <strong>1D Array Index:</strong><br>
+                index = row × width + col<br>
+                index = ${row} × 8 + ${col}<br>
+                index = ${index}<br><br>
+                <em>This thread would access array[${index}]</em>
+            `;
+        }
+        
+        function calculateMatrixIndex() {
+            const width = parseInt(document.getElementById('matrixWidth').value);
+            const row = parseInt(document.getElementById('matrixRow').value);
+            const col = parseInt(document.getElementById('matrixCol').value);
+            
+            const index = row * width + col;
+            
+            const result = document.getElementById('matrixIndexResult');
+            result.style.display = 'block';
+            result.className = 'result-box correct';
+            result.innerHTML = `
+                <strong>Matrix Index Calculation:</strong><br>
+                Matrix width: ${width} columns<br>
+                Position: row ${row}, column ${col}<br><br>
+                <strong>Formula:</strong> index = row × width + col<br>
+                index = ${row} × ${width} + ${col}<br>
+                index = ${row * width} + ${col}<br>
+                <strong>index = ${index}</strong><br><br>
+                <em>Skip ${row} complete rows (${row} × ${width} = ${row * width} elements),<br>
+                then move ${col} columns to the right.</em>
+            `;
+        }
+        
+        function calculateGridSize() {
+            const n = parseInt(document.getElementById('totalElements').value);
+            const blockSize = parseInt(document.getElementById('blockSize').value);
+            
+            const wrongWay = Math.floor(n / blockSize);
+            const wrongTotal = wrongWay * blockSize;
+            const missed = n - wrongTotal;
+            
+            const rightWay = Math.ceil(n / blockSize);
+            const rightTotal = rightWay * blockSize;
+            const extra = rightTotal - n;
+            
+            const result = document.getElementById('gridSizeResult');
+            result.style.display = 'block';
+            result.className = 'result-box';
+            result.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #d32f2f;">❌ Wrong Way (floor division):</strong><br>
+                    num_groups = ${n} / ${blockSize} = ${wrongWay}<br>
+                    Total work-items: ${wrongWay} × ${blockSize} = ${wrongTotal}<br>
+                    <strong style="color: #d32f2f;">Elements missed: ${missed}</strong>
+                </div>
+                
+                <div>
+                    <strong style="color: #388e3c;">✓ Correct Way (ceiling division):</strong><br>
+                    num_groups = (${n} + ${blockSize - 1}) / ${blockSize}<br>
+                    num_groups = ${n + blockSize - 1} / ${blockSize} = ${rightWay}<br>
+                    Total work-items: ${rightWay} × ${blockSize} = ${rightTotal}<br>
+                    Extra work-items: ${extra} (handled with boundary checks)
+                </div>
+            `;
+        }
+        
+        function checkQuiz2(element, correct) {
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                opt.style.pointerEvents = 'none';
+            });
+            
+            if (correct) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.textContent.includes('B) 2575')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            document.getElementById('quiz2-explanation').classList.add('show');
+        }
+        
+        // Lesson 3: Barrier demo
+        let barrierInterval;
+        let barrierCount = 0;
+        
+        function startBarrierDemo() {
+            resetBarrierDemo();
+            barrierCount = 0;
+            
+            barrierInterval = setInterval(() => {
+                if (barrierCount < 8) {
+                    const thread = document.getElementById(`thread${barrierCount}`);
+                    thread.style.background = '#4caf50';
+                    thread.style.color = 'white';
+                    thread.innerHTML = `T${barrierCount}<br>✓`;
+                    barrierCount++;
+                    
+                    document.getElementById('barrierStatus').textContent = 
+                        `${barrierCount}/8 threads at barrier...`;
+                } else {
+                    clearInterval(barrierInterval);
+                    document.getElementById('barrierStatus').innerHTML = 
+                        '<strong style="color: #4caf50;">✓ All threads synchronized! Proceeding...</strong>';
+                    
+                    setTimeout(() => {
+                        for (let i = 0; i < 8; i++) {
+                            document.getElementById(`thread${i}`).style.background = '#2196f3';
+                            document.getElementById(`thread${i}`).innerHTML = `T${i}<br>→`;
+                        }
+                        document.getElementById('barrierStatus').innerHTML = 
+                            '<strong style="color: #2196f3;">All threads working together!</strong>';
+                    }, 1000);
+                }
+            }, 300);
+        }
+        
+        function resetBarrierDemo() {
+            clearInterval(barrierInterval);
+            barrierCount = 0;
+            
+            for (let i = 0; i < 8; i++) {
+                const thread = document.getElementById(`thread${i}`);
+                if (thread) {
+                    thread.style.background = '#e0e7ff';
+                    thread.style.color = '#333';
+                    thread.innerHTML = `T${i}`;
+                }
+            }
+            
+            document.getElementById('barrierStatus').textContent = 'Threads arriving at barrier...';
+        }
+        
+        function checkQuiz3(element, correct) {
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                opt.style.pointerEvents = 'none';
+            });
+            
+            if (correct) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+            
+            document.getElementById('quiz3-explanation').classList.add('show');
+        }
+    </script>
+</body>
+</html>
