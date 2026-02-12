@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSE 190 Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--dk:#1a2744;--db:#243b6a;--mb:#2f4f8f;--dr:#8b2030;--dp:#b3405a;--sp:#d4677e;--wb:#8a7060;--lb:#c4a882;--cr:#f5efe6;--ow:#faf8f4;--dt:#1a1a1a;--mt:#5a5a5a;--bl:#e0d8ce;--cw:#fff;--sw:260px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:var(--ow);color:var(--dt);line-height:1.65;font-size:15px}
+.sb{position:fixed;top:0;left:0;width:var(--sw);height:100vh;background:var(--dk);overflow-y:auto;z-index:100;transition:transform .3s}
+.sb-hd{padding:24px 16px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-hd h1{font-family:'Cormorant Garamond',serif;color:var(--cr);font-size:18px;font-weight:600;letter-spacing:.5px;margin-bottom:2px}
+.sb-hd .st{font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.5px;font-weight:500}
+.ns{padding:14px 0 6px}
+.ns-t{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.25);padding:0 16px 6px;font-weight:600}
+.nl{display:block;padding:7px 16px 7px 20px;color:rgba(255,255,255,.55);text-decoration:none;font-size:12.5px;font-weight:400;transition:all .15s;border-left:3px solid transparent;cursor:pointer}
+.nl:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.04);border-left-color:var(--dp)}
+.nl.ac{color:#fff;background:rgba(255,255,255,.06);border-left-color:var(--dp);font-weight:500}
+.mt{display:none;position:fixed;top:10px;left:10px;z-index:200;background:var(--dk);color:#fff;border:none;width:38px;height:38px;border-radius:8px;font-size:18px;cursor:pointer;align-items:center;justify-content:center}
+.mn{margin-left:var(--sw);min-height:100vh}
+.ca{max-width:880px;margin:0 auto;padding:36px 44px 80px}
+.sec{display:none;animation:fi .25s ease}.sec.ac{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--dk);margin-bottom:6px;line-height:1.2}
+h3{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:var(--dr);margin:28px 0 10px;padding-bottom:5px;border-bottom:1px solid var(--bl)}
+h4{font-size:15px;font-weight:600;color:var(--dk);margin:18px 0 6px}
+.si{font-size:14px;color:var(--mt);margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--bl)}
+p{margin-bottom:10px}
+.cd{background:var(--cw);border:1px solid var(--bl);border-radius:7px;padding:16px 20px;margin:14px 0}
+.cd.hl{border-left:4px solid var(--dp)}.cd.bl{border-left:4px solid var(--mb)}.cd.rl{border-left:4px solid var(--dr)}
+.ct{font-weight:600;font-size:13px;color:var(--dr);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.tw{overflow-x:auto;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:var(--dk);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px}
+tbody td{padding:7px 11px;border-bottom:1px solid var(--bl)}
+tbody tr:nth-child(even){background:rgba(0,0,0,.015)}tbody tr:hover{background:rgba(179,64,90,.04)}
+.fm{font-family:'JetBrains Mono',monospace;background:#f0ebe3;padding:10px 14px;border-radius:5px;margin:10px 0;font-size:13px;line-height:1.8;overflow-x:auto;border:1px solid var(--bl);white-space:pre-wrap}
+code,.mo{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:#f0ebe3;padding:1px 4px;border-radius:3px}
+.qi{margin:10px 0;border:1px solid var(--bl);border-radius:7px;overflow:hidden;background:#fff}
+.qq{padding:12px 16px;cursor:pointer;font-weight:600;font-size:13.5px;color:var(--dk);display:flex;align-items:center;justify-content:space-between;transition:background .15s;user-select:none}
+.qq:hover{background:rgba(0,0,0,.02)}
+.qq .ar{font-size:11px;color:var(--dp);transition:transform .2s;flex-shrink:0;margin-left:10px}
+.qi.op .qq .ar{transform:rotate(90deg)}
+.qa{display:none;padding:0 16px 14px;font-size:13.5px;color:var(--dt);line-height:1.7;border-top:1px solid var(--bl)}
+.qi.op .qa{display:block;padding-top:12px}
+.sp{display:flex;gap:12px;margin:10px 0;align-items:flex-start}
+.sn{flex-shrink:0;width:26px;height:26px;background:var(--dr);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-top:2px}
+.sc{flex:1}
+.cs{background:#fff;border:1px solid var(--bl);border-radius:7px;padding:20px;margin:16px 0}
+.cs h4{margin-top:0;color:var(--dr)}
+.cr{display:flex;gap:10px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.cr label{font-size:12.5px;font-weight:600;min-width:150px;color:var(--dk)}
+.cr input,.cr select{padding:7px 10px;border:1px solid var(--bl);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:12.5px;background:var(--ow);width:180px}
+.cr input:focus,.cr select:focus{outline:none;border-color:var(--dp)}
+.cb{padding:7px 18px;background:var(--dr);color:#fff;border:none;border-radius:5px;font-size:12.5px;font-weight:600;cursor:pointer;transition:background .2s;margin-top:6px}
+.cb:hover{background:var(--dp)}
+.crs{margin-top:10px;padding:12px 14px;background:var(--ow);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:13px;border:1px solid var(--bl);min-height:36px;overflow-x:auto}
+.tg{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.tg.cn{background:rgba(36,59,106,.1);color:var(--db)}.tg.fl{background:rgba(139,32,48,.1);color:var(--dr)}.tg.ho{background:rgba(179,64,90,.1);color:var(--dp)}.tg.wn{background:rgba(180,120,60,.12);color:#8a6020}
+@media(max-width:860px){.sb{transform:translateX(-100%)}.sb.op{transform:translateX(0)}.mt{display:flex}.mn{margin-left:0}.ca{padding:56px 16px 80px}}
+</style>
+</head>
+<body>
+<button class="mt" onclick="document.querySelector('.sb').classList.toggle('op')">&#9776;</button>
+<nav class="sb" id="sidebar">
+<div class="sb-hd"><h1>CSE 190</h1><div class="st">Study Guide &middot; Winter 2026</div></div>
+<div class="ns"><div class="ns-t">Foundations</div>
+<a class="nl ac" data-s="overview">Overview &amp; Big Data</a>
+<a class="nl" data-s="ms-basics">Mass Spectrometry Basics</a>
+<a class="nl" data-s="amino-acids">Amino Acid Masses</a>
+<a class="nl" data-s="peptide-mass">Peptide Mass (m/z)</a></div>
+<div class="ns"><div class="ns-t">Fragmentation</div>
+<a class="nl" data-s="tandem-ms">Tandem MS (MS/MS)</a>
+<a class="nl" data-s="ion-types">Ion Types &amp; Offsets</a>
+<a class="nl" data-s="fragment-match">Fragment Ion Matching</a>
+<a class="nl" data-s="complementary">Complementary Ions</a></div>
+<div class="ns"><div class="ns-t">Database Search</div>
+<a class="nl" data-s="db-search">DB Search Overview</a>
+<a class="nl" data-s="digestion">Digestion &amp; Peptide Types</a>
+<a class="nl" data-s="psm">PSMs &amp; Quality</a>
+<a class="nl" data-s="usi">USI &amp; MassIVE Tools</a></div>
+<div class="ns"><div class="ns-t">Scoring</div>
+<a class="nl" data-s="likelihood">Likelihood Scoring</a>
+<a class="nl" data-s="log-likelihood">Log-Likelihood Tables</a>
+<a class="nl" data-s="scoring-walk">Scoring Walkthrough</a></div>
+<div class="ns"><div class="ns-t">De Novo &amp; Counting</div>
+<a class="nl" data-s="denovo">Spectrum Graphs</a>
+<a class="nl" data-s="denovo-algo">De Novo Algorithm</a>
+<a class="nl" data-s="counting">Counting &amp; P-values</a></div>
+<div class="ns"><div class="ns-t">FDR &amp; Proteins</div>
+<a class="nl" data-s="fdr">False Discovery Rates</a>
+<a class="nl" data-s="protein-inf">Protein Inference</a></div>
+<div class="ns"><div class="ns-t">Tools &amp; Practice</div>
+<a class="nl" data-s="calculators">Calculators</a>
+<a class="nl" data-s="massive-guide">MassIVE Website Guide</a>
+<a class="nl" data-s="practice">Practice Q&amp;A</a></div>
+</nav>
+<main class="mn"><div class="ca">
+<!-- OVERVIEW -->
+<div class="sec ac" id="overview">
+<h2>Course Overview &amp; Big Data Concepts</h2>
+<p class="si">CSE 190: Algorithms and Systems for Biomolecular Big Data. Knowledge bases, real-world data challenges, and the MassIVE platform.</p>
+<h3>Real World Big Data vs. Traditional ML</h3>
+<p>Traditional ML: input dataset + labels, output model predicting labels from data. Real world big data is different:</p>
+<div class="cd bl">
+<p>May have millions or billions of labels. Data is not fully labeled. Labels can be related (parent/child/sibling) or hierarchical. Full set of labels is not known in advance. Unclear how to model matches for never-seen data vectors and labels. Data grows and accumulates every day.</p>
+</div>
+<h3>Knowledge Bases (KB)</h3>
+<div class="cd hl"><div class="ct">Key Definition</div>
+<p>Knowledge bases capture knowledge (data/label associations) derived from, and supported by, data. Associated with the union of all datasets.</p>
+<p><strong>Reference knowledge:</strong> defines the representative data vector for a label (e.g., photo on an ID card).</p>
+<p><strong>Detection knowledge:</strong> establishes the observation of a data vector/label in a given dataset.</p>
+</div>
+<p>KB error control questions: How to determine the representative for a label? How to control KB error rates (when first determined and over time)? How to use the KB to improve models for labeling new data (considering both matching error and KB error)?</p>
+<h3>MassIVE &amp; Global Data</h3>
+<div class="cd">
+<p><strong>MassIVE</strong> = Mass Spectrometry Interactive Virtual Environment (<code>massive.ucsd.edu</code>). Repository: &gt;20,000 datasets, 10s of billions of data points. Algorithmic analysis: &gt;100s of millions of identifications, &gt;10 million labels.</p>
+<p><strong>MassIVE-KB:</strong> Millions of reference entries. International reference for global proteomics knowledge.</p>
+</div>
+</div>
+
+<!-- MS BASICS -->
+<div class="sec" id="ms-basics">
+<h2>Mass Spectrometry Basics</h2>
+<p class="si">MS is the main technology for high-throughput analysis of proteins and small molecules.</p>
+<h3>Proteins Run Life</h3>
+<div class="cd bl">
+<p>Genes: Human ~20,000-22,000; Mouse ~20,000-22,000; Worm (C. Elegans) ~19,000; Rice/Corn ~32,000-45,000.</p>
+<p>Each gene may generate several proteins via: combinatorial splicing, sequence variation, post-translational modifications (hundreds of types and sites), quantification/turnover, protein structure/interactions, endogenous and immune peptides (e.g., insulin).</p>
+</div>
+<h3>Protein Sequence as Weighted Alphabet</h3>
+<p>An amino acid sequence can be modeled as a <strong>string over a weighted alphabet</strong>. Each amino acid has a specific mass.</p>
+<div class="cd hl">
+<p>Sequences of amino acids are almost equivalent to sequences of amino acid masses. <strong>Exception: m(I) = m(L) = 113.1</strong> -- Isoleucine and Leucine have the same mass.</p>
+<p><strong>Parent mass m(p)</strong> of peptide p = a1,...,an is: m(p) = SUM of m(ai) for i=1..n</p>
+</div>
+</div>
+
+<!-- AMINO ACIDS -->
+<div class="sec" id="amino-acids">
+<h2>Amino Acid Masses</h2>
+<p class="si">Complete mass table from course slides. <span class="tg wn">Critical</span> These exact values are used in ALL calculations.</p>
+<h3>Full Amino Acid Mass Table</h3>
+<div class="tw"><table>
+<thead><tr><th>1-Letter</th><th>3-Letter</th><th>Formula</th><th>Monoisotopic</th><th>Integer</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>Ala</td><td>C3H5ON</td><td>71.03711</td><td>71</td></tr>
+<tr><td>R</td><td>Arg</td><td>C6H12ON4</td><td>156.10111</td><td>156</td></tr>
+<tr><td>N</td><td>Asn</td><td>C4H6O2N2</td><td>114.04293</td><td>114</td></tr>
+<tr><td>D</td><td>Asp</td><td>C4H5O3N</td><td>115.02694</td><td>115</td></tr>
+<tr><td>C</td><td>Cys</td><td>C3H5ONS</td><td>103.00919</td><td>103</td></tr>
+<tr><td>E</td><td>Glu</td><td>C5H7O3N</td><td>129.04259</td><td>129</td></tr>
+<tr><td>Q</td><td>Gln</td><td>C5H8O2N2</td><td>128.05858</td><td>128</td></tr>
+<tr><td>G</td><td>Gly</td><td>C2H3ON</td><td>57.02146</td><td>57</td></tr>
+<tr><td>H</td><td>His</td><td>C6H7ON3</td><td>137.05891</td><td>137</td></tr>
+<tr><td>I</td><td>Ile</td><td>C6H11ON</td><td>113.08406</td><td>113</td></tr>
+<tr><td>L</td><td>Leu</td><td>C6H11ON</td><td>113.08406</td><td>113</td></tr>
+<tr><td>K</td><td>Lys</td><td>C6H12ON2</td><td>128.09496</td><td>128</td></tr>
+<tr><td>M</td><td>Met</td><td>C5H9ONS</td><td>131.04049</td><td>131</td></tr>
+<tr><td>F</td><td>Phe</td><td>C9H9ON</td><td>147.06841</td><td>147</td></tr>
+<tr><td>P</td><td>Pro</td><td>C5H7ON</td><td>97.05276</td><td>97</td></tr>
+<tr><td>S</td><td>Ser</td><td>C3H5O2N</td><td>87.03203</td><td>87</td></tr>
+<tr><td>T</td><td>Thr</td><td>C4H7O2N</td><td>101.04768</td><td>101</td></tr>
+<tr><td>W</td><td>Trp</td><td>C11H10ON2</td><td>186.07931</td><td>186</td></tr>
+<tr><td>Y</td><td>Tyr</td><td>C9H9O2N</td><td>163.06333</td><td>163</td></tr>
+<tr><td>V</td><td>Val</td><td>C5H9ON</td><td>99.06841</td><td>99</td></tr>
+</tbody></table></div>
+<h3>Key Constants</h3>
+<div class="cd rl"><div class="ct">Memorize These</div>
+<p><strong>H2O</strong> = 18.010565 Da (integer: 18)</p>
+<p><strong>Charge (proton/H+)</strong> = 1.007276 Da (integer: 1)</p>
+<p><strong>I and L indistinguishable:</strong> both = 113.08406 / 113</p>
+</div>
+<h3>Additional Masses (Fragment Offsets)</h3>
+<div class="cd">
+<p><code>C-12: 12 Da</code> &nbsp; <code>C-13: 13.0034</code> &nbsp; <code>H: 1.0078</code> &nbsp; <code>N: 14.0031</code> &nbsp; <code>O: 15.9949</code></p>
+<p><code>NH3: 17.0265</code> &nbsp; <code>H2O: 18.0106</code> &nbsp; <code>CO: 27.9949</code></p>
+</div>
+</div>
+
+<!-- PEPTIDE MASS -->
+<div class="sec" id="peptide-mass">
+<h2>Peptide Mass (m/z) Calculations</h2>
+<p class="si">How to calculate measured m/z at different charge states.</p>
+<h3>Core Formula</h3>
+<div class="cd hl"><div class="ct">Measured m/z</div>
+<div class="fm">m/z = (sum_of_AA_masses + 18.010565 + z * 1.007276) / z
+
+Integer form:
+m/z = (sum_of_AA_masses + 18 + z * 1) / z</div>
+</div>
+<h3>Slides Example: PEPTIDE</h3>
+<div class="cd bl">
+<p>P(97) + E(129) + P(97) + T(101) + I(113) + D(115) + E(129) = <strong>781</strong></p>
+<p>z=1: (781 + 18 + 1) / 1 = <strong>800 m/z</strong></p>
+<p>z=2: (781 + 18 + 2) / 2 = <strong>400.5 m/z</strong></p>
+</div>
+<div class="qi"><div class="qq">Why include H2O? <span class="ar">&#9654;</span></div><div class="qa">Amino acid residue masses represent the mass after losing water during peptide bond formation. The intact peptide retains one H2O for the N-terminus H and C-terminus OH. So you add it back once for the whole peptide.</div></div>
+<div class="qi"><div class="qq">Why multiply z charges? <span class="ar">&#9654;</span></div><div class="qa">MS measures ionized molecules. Each charge = one added proton (1.007276 Da). If charge is z, the peptide gained z protons. The instrument measures total mass (including protons) divided by z.</div></div>
+<div class="qi"><div class="qq">What about fragment ion m/z at charge &gt;1? <span class="ar">&#9654;</span></div><div class="qa">For a fragment ion at charge z: m/z = (fragment_neutral_mass + z * 1.007276) / z. For example, a doubly-charged y8 ion: y8++ m/z = (suffix_AA_mass + 18.010565 + 2 * 1.007276) / 2. This is important for Assignment 2 where you calculate y8++ for VQPTESIVR.</div></div>
+</div>
+<!-- TANDEM MS -->
+<div class="sec" id="tandem-ms">
+<h2>Tandem Mass Spectrometry (MS/MS)</h2>
+<p class="si">MS/MS fragments peptides and measures the resulting pieces, creating prefix and suffix masses that encode the sequence.</p>
+<h3>How MS/MS Works</h3>
+<p>A selected peptide ion is fragmented at different backbone positions, producing:</p>
+<div class="cd hl">
+<p><strong>Prefix fragments</strong> (N-terminus side) &rarr; generate <strong>b-ions</strong> and <strong>a-ions</strong></p>
+<p><strong>Suffix fragments</strong> (C-terminus side) &rarr; generate <strong>y-ions</strong></p>
+</div>
+<p>For peptide LARGE, prefix masses are: L, LA, LAR, LARG -- cumulative sums from the N-terminus.</p>
+<h3>Modifications in MS/MS</h3>
+<p>A modification changes the mass at a specific site. For modified peptide LARG*E, prefix masses shift at and after the modification. This creates <strong>mass shifts</strong> in the spectrum.</p>
+<p>Example from slides: Mass(F) = 147 Da. If a modification of -10.059 occurs: 147 - 10 = 137 = mass(H). This is how MODa discovers modifications.</p>
+<h3>Good vs. Poor PSMs</h3>
+<div class="cd bl"><div class="ct">Good PSM Features</div>
+<p>High percentage of total intensity explained by peptide ions at low mass tolerance. Consecutive series of y fragments (sometimes also b ions). Known sequence-specific fragmentation patterns (e.g., high-intensity peaks before/after Proline).</p>
+</div>
+<div class="cd rl"><div class="ct">Poor PSM Indicators</div>
+<p>Insufficient matched peaks (ID based on absence of better alternatives). Many unexplained peaks. Low explained intensity. Low signal-to-noise ratio.</p>
+<p>Examples from slides: HDSKWFKEPYFVHAVEWGSHVYFFFR (insufficient matched peaks). FTASAGIQVVGDDLTVTNPKR (many unexplained peaks, low SNR).</p>
+</div>
+</div>
+
+<!-- ION TYPES -->
+<div class="sec" id="ion-types">
+<h2>Ion Types &amp; Mass Offsets</h2>
+<p class="si">Complete reference of all fragment ion types with mass offsets and frequencies, directly from slides.</p>
+<h3>Prefix Ion Types</h3>
+<div class="tw"><table>
+<thead><tr><th>Fragment</th><th>Mass Offset</th><th>Integer Offset</th></tr></thead>
+<tbody>
+<tr><td><strong>b-ion</strong></td><td>+1.0073</td><td>+1</td></tr>
+<tr><td>b-ion 13C</td><td>+2.0106</td><td>+2</td></tr>
+<tr><td>b-NH3</td><td>-16.0193</td><td>-16</td></tr>
+<tr><td>b-H2O</td><td>-17.0033</td><td>-17</td></tr>
+<tr><td><strong>a-ion</strong></td><td>-26.9876</td><td>-27</td></tr>
+<tr><td>a-NH3</td><td>-44.0142</td><td>-44</td></tr>
+<tr><td>a-H2O</td><td>-44.9982</td><td>-45</td></tr>
+</tbody></table></div>
+<h3>Suffix Ion Types</h3>
+<div class="tw"><table>
+<thead><tr><th>Fragment</th><th>Mass Offset</th><th>Integer Offset</th></tr></thead>
+<tbody>
+<tr><td><strong>y-ion</strong></td><td>+19.0178</td><td>+19</td></tr>
+<tr><td>y-ion 13C</td><td>+20.0212</td><td>+20</td></tr>
+<tr><td>y-NH3</td><td>+1.9913</td><td>+2</td></tr>
+<tr><td>y-H2O</td><td>+1.0073</td><td>+1</td></tr>
+</tbody></table></div>
+<h3>Understanding the Offsets</h3>
+<div class="cd hl"><div class="ct">How Offsets Work</div>
+<p>Offsets are relative to the <strong>prefix residue mass</strong> (sum of AA masses for a prefix) or <strong>suffix residue mass</strong>.</p>
+<p><strong>b-ion</strong> = prefix_residue_mass + 1.0073 (sum of AA masses + mass of hydrogen ion)</p>
+<p><strong>y-ion</strong> = suffix_residue_mass + 18.0106 (H2O) + 1.0073 (proton) = suffix_residue_mass + 19.0178</p>
+<p><strong>a-ion</strong> = b-ion - CO = b-ion - 27.9949 = prefix_residue_mass - 26.9876 (offset -27 integer)</p>
+</div>
+</div>
+
+<!-- FRAGMENT MATCHING -->
+<div class="sec" id="fragment-match">
+<h2>Fragment Ion Matching</h2>
+<p class="si">Complete example from slides for peptide PEPTIDE showing how to build the fragment ion table.</p>
+<h3>PEPTIDE Fragment Ion Table</h3>
+<div class="tw"><table>
+<thead><tr><th>AA</th><th>AA Mass</th><th>Prefix Mass</th><th>b-ion</th><th>Suffix Mass</th><th>y-ion</th></tr></thead>
+<tbody>
+<tr><td>P</td><td>97</td><td>97</td><td>98</td><td>781</td><td>800</td></tr>
+<tr><td>E</td><td>129</td><td>226</td><td>227</td><td>684</td><td>703</td></tr>
+<tr><td>P</td><td>97</td><td>323</td><td>324</td><td>555</td><td>574</td></tr>
+<tr><td>T</td><td>101</td><td>424</td><td>425</td><td>458</td><td>477</td></tr>
+<tr><td>I</td><td>113</td><td>537</td><td>538</td><td>357</td><td>376</td></tr>
+<tr><td>D</td><td>115</td><td>652</td><td>653</td><td>244</td><td>263</td></tr>
+<tr><td>E</td><td>129</td><td>781</td><td>782</td><td>129</td><td>148</td></tr>
+</tbody></table></div>
+<div class="cd hl"><div class="ct">How to Build This Table</div>
+<p><strong>Prefix mass</strong> = cumulative sum of AA masses from N-terminus. (97, 97+129=226, 226+97=323, ...)</p>
+<p><strong>b-ion mass</strong> = prefix mass + 1 (hydrogen ion).</p>
+<p><strong>Suffix mass</strong> = total AA sum - prefix mass = 781 - prefix mass.</p>
+<p><strong>y-ion mass</strong> = suffix mass + 19 (H2O + hydrogen ion).</p>
+<p><strong>Parent mass</strong> M = 781 + 18 + 1 = 800 (at z=1).</p>
+</div>
+<h3>Notation: b and y Ion Numbering</h3>
+<div class="cd">
+<p>For a peptide of length n: <strong>b1</strong> is the first prefix (1 AA from N-terminus), <strong>b2</strong> is two AAs, etc. <strong>y1</strong> is the last single AA (from C-terminus), <strong>y2</strong> is the last two, etc.</p>
+<p>So for PEPTIDE (length 7): b1=P, b2=PE, b3=PEP, b4=PEPT, b5=PEPTI, b6=PEPTID, b7=PEPTIDE (full). y1=E, y2=DE, y3=IDE, y4=TIDE, y5=PTIDE, y6=EPTIDE, y7=PEPTIDE.</p>
+</div>
+</div>
+
+<!-- COMPLEMENTARY -->
+<div class="sec" id="complementary">
+<h2>Complementary Ions</h2>
+<p class="si">How to find the mass of a complementary y-ion given a b-ion mass, and vice versa.</p>
+<h3>The Complementary Ion Formula</h3>
+<div class="cd hl"><div class="ct">Key Formula</div>
+<div class="fm">For complementary ions:
+  mass(b-ion) + mass(y-ion) = M + 1
+  
+Therefore:
+  mass(y-ion) = M + 1 - mass(b-ion)
+  mass(b-ion) = M + 1 - mass(y-ion)
+
+Where M = parent mass (measured at charge 1)</div>
+</div>
+<h3>Example: PEPTIDE (M = 800)</h3>
+<div class="cd bl">
+<p>Prefix PEP: sum_AA = 323. b-ion = 324.</p>
+<p>Complementary suffix TIDE: sum_AA = 458. y-ion = 477.</p>
+<p>Check: 324 + 477 = 801 = M + 1 = 800 + 1.</p>
+</div>
+<h3>Vertex Score Computation</h3>
+<p>For a spectrum peak at mass m with parent mass M:</p>
+<div class="cd">
+<p>1. Add scores from all <strong>prefix ions</strong> around mass m.</p>
+<p>2. Find complementary y-ion at <strong>my = M - m + 1</strong>.</p>
+<p>3. Add scores from all <strong>suffix ions</strong> around mass my.</p>
+<p>All prefix/suffix ions found at relative mass offsets from the main b/y-ions.</p>
+</div>
+</div>
+<!-- DB SEARCH -->
+<div class="sec" id="db-search">
+<h2>Database Search Overview</h2>
+<p class="si">Finding a peptide from the database with maximal match to an experimental spectrum.</p>
+<h3>Problem Definition</h3>
+<div class="cd hl"><div class="ct">Database Search Problem</div>
+<p><strong>Input:</strong> S (experimental spectrum), D (database of protein sequences), Delta (set of possible ion types), m (parent mass).</p>
+<p><strong>Output:</strong> A peptide of mass m from D whose theoretical spectrum matches S the best.</p>
+</div>
+<h3>Pipeline</h3>
+<p>Proteins &rarr; generate peptides in silico (enzyme rules) &rarr; filter by parent mass &rarr; generate theoretical spectra &rarr; score against experimental spectrum.</p>
+<h3>Maestro: Stratified Search</h3>
+<div class="cd bl">
+<p><strong>1. MS-Cluster:</strong> Clusters spectra from same peptide. Reduces redundancy in input data.</p>
+<p><strong>2. M-SPLIT (Spectral Library):</strong> Matches to MassIVE-KB. Smallest search space, most information. Quality evaluated by <strong>Cosine(M,A)</strong>.</p>
+<p><strong>3. MS-GF+ (Database Search):</strong> Matches to reference proteome sequences. Quality evaluated by <strong>SpecProb</strong> (p-value) and <strong>DB E-Value</strong>. Discovers new peptides not in KB.</p>
+<p><strong>4. MODa (Blind/Open Search):</strong> Allows K mass offsets from database sequences. Largest search space. Only for otherwise-unidentified spectra. Discovers novel modifications.</p>
+</div>
+<h3>Mass Filtering</h3>
+<p>Only peptides with mass within tolerance of the experimental parent mass are scored. This dramatically reduces search space. Many sequences may share a common mass; sequences of same mass may score differently.</p>
+</div>
+
+<!-- DIGESTION -->
+<div class="sec" id="digestion">
+<h2>Protein Digestion &amp; Peptide Types</h2>
+<p class="si">Enzyme cleavage rules and peptide classification.</p>
+<h3>Enzyme Rules</h3>
+<div class="tw"><table>
+<thead><tr><th>Enzyme</th><th>Cleavage Rule</th></tr></thead>
+<tbody>
+<tr><td><strong>Trypsin</strong></td><td>Cleaves to the RIGHT of R, K -- if NOT followed by P</td></tr>
+<tr><td>Asp-N</td><td>Cleaves to the LEFT of D, E</td></tr>
+<tr><td>Chymotrypsin</td><td>Cleaves to the RIGHT of F, Y, W, L -- if NOT followed by P</td></tr>
+</tbody></table></div>
+<h3>Peptide Classification (Trypsin)</h3>
+<div class="cd hl"><div class="ct">Definitions</div>
+<p><strong>Tryptic (fully-tryptic):</strong> Both preceded by K/R (or protein start) AND ending in K/R (or protein end).</p>
+<p><strong>Semi-tryptic:</strong> Preceded by K/R OR ending in K/R (but not both).</p>
+<p><strong>Non-tryptic:</strong> Neither preceded by K/R nor ending in K/R.</p>
+</div>
+<div class="qi"><div class="qq">How to find all fully-tryptic peptides from a protein?<span class="ar">&#9654;</span></div><div class="qa">
+<p>1. Scan the sequence left to right. Mark every position after R or K (unless followed by P) as a cleavage site. Also consider the protein start and end.</p>
+<p>2. Each segment between two consecutive cleavage sites is one fully-tryptic peptide (with 0 missed cleavages).</p>
+<p>3. For missed cleavages: a peptide with m missed cleavages spans m+1 consecutive tryptic segments.</p>
+<p>Example from Assignment 1, protein P69905: MVLSPADKTNVKAAWGK... -- the first cleavage after K at position 8 (since next AA is T, not P), giving first tryptic peptide MVLSPADK.</p>
+</div></div>
+<h3>UniProt Database Sizes</h3>
+<div class="cd">
+<p>Human (2018/10): SwissProt reviewed 20,381. Reference proteome 73,099. With isoforms: SwissProt 42,410. Reference+isoforms 95,135.</p>
+</div>
+</div>
+
+<!-- PSMs -->
+<div class="sec" id="psm">
+<h2>Peptide-Spectrum Matches &amp; Quality</h2>
+<p class="si">How spectrum peaks are annotated with peptide fragment ions.</p>
+<h3>PSM Annotation</h3>
+<div class="cd">
+<p>Prefix fragments generate <strong>b ions</strong> (a-ions also often prominent). Suffix fragments generate <strong>y ions</strong>.</p>
+<p>Ions must be <strong>charged</strong> to be detectable. Can be multiply-charged. 13C isotopes help determine fragment charges.</p>
+</div>
+<h3>Quality Metrics</h3>
+<div class="cd hl">
+<p><strong>For M-SPLIT (spectral library):</strong> Cosine(M,A) -- cosine similarity between query and library spectrum.</p>
+<p><strong>For MS-GF+:</strong> SpecProb (p-value of match among all possible peptides) and DB E-Value (expected number of matches in the reference proteome database).</p>
+</div>
+</div>
+
+<!-- USI -->
+<div class="sec" id="usi">
+<h2>USI &amp; MassIVE Tools</h2>
+<p class="si">Universal Spectrum Identifiers and how to use MassIVE for spectrum comparison.</p>
+<h3>USI Format</h3>
+<div class="cd hl">
+<p>USIs are universal resource locators for MS data. Example:</p>
+<div class="fm">mzspec:MassIVE:TASK-561e8c6d...:spectra/specs_ms.mgf:scan:435442:KSM[+15.995]YEEEINETR/2</div>
+<p>Contains: repository, dataset/task ID, file, scan number, peptide sequence (with modifications), charge.</p>
+</div>
+<h3>How to Use MassIVE for Comparison</h3>
+<div class="cd bl"><div class="ct">Step-by-Step (from slides)</div>
+<div class="sp"><div class="sn">1</div><div class="sc">Get the first USI from search results (e.g., for your experimental spectrum).</div></div>
+<div class="sp"><div class="sn">2</div><div class="sc">Get the second USI from MassIVE-KB reference spectrum (e.g., for a synthetic peptide reference).</div></div>
+<div class="sp"><div class="sn">3</div><div class="sc">Go to the Spectrum Identifier Resolver and paste both USIs into the comparison fields.</div></div>
+<div class="sp"><div class="sn">4</div><div class="sc">Click "Reset Figure" if needed. The tool shows a mirror plot and cosine score.</div></div>
+</div>
+<h3>MassIVE-KB Reference Spectra</h3>
+<p>From any online results view, you can click "View in MassIVE" then "Search MassIVE-KB reference spectra" to find the reference spectrum for a peptide. USI cosines quantify similarity between spectra.</p>
+<h3>For Open Search (MODa) Results</h3>
+<div class="cd">
+<p>When comparing spectra from open search: if the modified and unmodified peptides differ in mass, edit the USI to remove the modification substring (e.g., "[-10.059]"), then search MassIVE-KB. The Spectrum Identifier Resolver can compensate for mass differences automatically by adjusting parameters at the bottom of the page.</p>
+</div>
+</div>
+<!-- LIKELIHOOD -->
+<div class="sec" id="likelihood">
+<h2>Likelihood Scoring</h2>
+<p class="si">The core scoring model: probability ratios for signal vs. noise.</p>
+<h3>Likelihood Model Basics</h3>
+<div class="cd hl"><div class="ct">Core Concept</div>
+<p>Likelihood = Prob(signal) / Prob(noise).</p>
+<p>A spectrum with 1000 mass bins and 100 peaks has <strong>Prob(noise) ~ 0.1</strong>.</p>
+</div>
+<h3>Gain (Peak Observed)</h3>
+<div class="cd">
+<div class="fm">Gain = Prob(signal) / Prob(noise)
+
+Example: b-ion frequency = 0.5, Prob(noise) = 0.1
+Gain = 0.5 / 0.1 = 5
+"Observing a b-ion is 5 times more common than noise."</div>
+</div>
+<h3>Loss (Peak Missing)</h3>
+<div class="cd">
+<div class="fm">Loss = (1 - Prob(signal)) / (1 - Prob(noise))
+
+Example: b-ion not observed
+Loss = (1 - 0.5) / (1 - 0.1) = 0.5 / 0.9 = 0.55</div>
+</div>
+<div class="cd rl"><div class="ct">Key Intuition</div>
+<p>Higher Prob(signal) &rarr; smaller numerator &rarr; harsher penalty for missing it.</p>
+<p>Higher Prob(noise) &rarr; smaller denominator &rarr; looser penalty (less contrast with noise: lower gains for seeing a peak AND lower penalties for missing it).</p>
+</div>
+<h3>Combining Multiple Fragments</h3>
+<div class="cd bl">
+<p>Multiple evidence combined as <strong>product of ratios</strong>. Positive evidence (detection) increases score (ratios &gt;1). Negative evidence (missing) decreases score (ratios 0-1).</p>
+<p><strong>Slides example:</strong> Observed: b, b-13C, a, b-H2O, a-H2O. Missed: b-NH3, a-NH3.</p>
+<p>Product observed: 5 x 1.1 x 1.7 x 1.2 x 1.5 = ~16.83</p>
+<p>Product missed: 0.94 x 0.99 = ~0.93</p>
+<p>Total: ~15.66</p>
+</div>
+<h3>Whole Peptide Score</h3>
+<div class="cd">
+<p>For PEPTIDE, the total score considers all prefix/suffix at each breakpoint:</p>
+<p>Score(P) x Score(EPTIDE) x Score(PE) x Score(PTIDE) x ... x Score(PEPTID) x Score(E)</p>
+<p>Each "Score" includes both prefix and suffix fragment evidence at that breakpoint.</p>
+</div>
+</div>
+
+<!-- LOG-LIKELIHOOD -->
+<div class="sec" id="log-likelihood">
+<h2>Log-Likelihood Tables</h2>
+<p class="si">Log transforms simplify products to sums. <span class="tg wn">Critical</span> These exact values are used in scoring calculations.</p>
+<h3>Properties of Log</h3>
+<div class="cd hl">
+<p>log(a x b) = log(a) + log(b) -- products become sums.</p>
+<p>log(ratio &gt; 1) is positive -- premium for positive evidence.</p>
+<p>log(ratio between 0 and 1) is negative -- penalty for missing evidence.</p>
+</div>
+<h3>Complete Prefix Log-Likelihood Table</h3>
+<div class="tw"><table>
+<thead><tr><th>Fragment</th><th>Int. Offset</th><th>Freq.</th><th>Gain</th><th>Loss</th><th>Log(Gain)</th><th>Log(Loss)</th></tr></thead>
+<tbody>
+<tr style="font-weight:600"><td>b-ion</td><td>+1</td><td>0.5</td><td>5</td><td>0.55</td><td>2.33</td><td>-0.85</td></tr>
+<tr><td>b-ion 13C</td><td>+2</td><td>0.11</td><td>1.1</td><td>0.99</td><td>0.14</td><td>-0.02</td></tr>
+<tr><td>b-NH3</td><td>-16</td><td>0.15</td><td>1.5</td><td>0.94</td><td>0.58</td><td>-0.08</td></tr>
+<tr><td>b-H2O</td><td>-17</td><td>0.12</td><td>1.2</td><td>0.98</td><td>0.26</td><td>-0.03</td></tr>
+<tr><td>a-ion</td><td>-27</td><td>0.17</td><td>1.7</td><td>0.92</td><td>0.77</td><td>-0.12</td></tr>
+<tr><td>a-NH3</td><td>-44</td><td>0.11</td><td>1.1</td><td>0.99</td><td>0.14</td><td>-0.02</td></tr>
+<tr><td>a-H2O</td><td>-45</td><td>0.15</td><td>1.5</td><td>0.94</td><td>0.58</td><td>-0.08</td></tr>
+</tbody></table></div>
+<h3>Complete Suffix Log-Likelihood Table</h3>
+<div class="tw"><table>
+<thead><tr><th>Fragment</th><th>Int. Offset</th><th>Freq.</th><th>Gain</th><th>Loss</th><th>Log(Gain)</th><th>Log(Loss)</th></tr></thead>
+<tbody>
+<tr style="font-weight:600"><td>y-ion</td><td>+19</td><td>0.52</td><td>5.2</td><td>0.53</td><td>2.38</td><td>-0.91</td></tr>
+<tr><td>y-ion 13C</td><td>+20</td><td>0.16</td><td>1.6</td><td>0.93</td><td>0.68</td><td>-0.10</td></tr>
+<tr><td>y-NH3</td><td>+2</td><td>0.11</td><td>1.1</td><td>0.99</td><td>0.14</td><td>-0.02</td></tr>
+<tr><td>y-H2O</td><td>+1</td><td>0.14</td><td>1.4</td><td>0.96</td><td>0.49</td><td>-0.07</td></tr>
+</tbody></table></div>
+<p><em>All values assume Prob(noise) = 0.1</em></p>
+<h3>Log-Likelihood Score for Whole Peptide</h3>
+<div class="cd bl">
+<p>Products become sums: Score(P) x Score(EPTIDE) &rarr; LogScore(P) + LogScore(EPTIDE), etc.</p>
+<p>PEPTIDE example from slides: Matched peaks 14, Missing peaks 63, Total score: <strong>20.5</strong></p>
+</div>
+</div>
+
+<!-- SCORING WALKTHROUGH -->
+<div class="sec" id="scoring-walk">
+<h2>Scoring Walkthrough</h2>
+<p class="si">Step-by-step procedure for calculating the match score at a prefix mass. This is the exact procedure for Assignment 2 scoring questions.</p>
+<h3>Scoring a Prefix Mass (Prefix Ions Only)</h3>
+<div class="cd hl">
+<div class="sp"><div class="sn">1</div><div class="sc"><strong>Identify the prefix mass</strong> you are scoring (e.g., 525.23 from Assignment 2).</div></div>
+<div class="sp"><div class="sn">2</div><div class="sc"><strong>For each prefix ion type</strong>, calculate expected mass using integer offsets:
+<div class="fm">b-ion:     prefix_mass + 1
+b-13C:     prefix_mass + 2
+b-NH3:     prefix_mass - 16
+b-H2O:     prefix_mass - 17
+a-ion:     prefix_mass - 27
+a-NH3:     prefix_mass - 44
+a-H2O:     prefix_mass - 45</div></div></div>
+<div class="sp"><div class="sn">3</div><div class="sc"><strong>Check each expected mass</strong> against the experimental spectrum. A peak is "detected" if any experimental peak falls within <strong>0.5 Da</strong> of the expected mass (tolerance from Assignment 2). You can use the interactive spectrum viewer "Ions" panel to help identify matches.</div></div>
+<div class="sp"><div class="sn">4</div><div class="sc"><strong>Look up the score</strong> for each ion type: if peak found, add <strong>Log(Gain)</strong>. If peak NOT found, add <strong>Log(Loss)</strong>.</div></div>
+<div class="sp"><div class="sn">5</div><div class="sc"><strong>Sum all values.</strong> This is the prefix-only log-likelihood score for that prefix mass.</div></div>
+</div>
+<h3>Adding Suffix Ions (Full Score)</h3>
+<div class="cd bl">
+<div class="sp"><div class="sn">6</div><div class="sc"><strong>Find the complementary suffix residue mass.</strong> The b-ion for this prefix is at prefix_mass + 1. The complementary y-ion mass = M + 1 - b_ion_mass = M - prefix_mass. The suffix residue mass = y_ion_mass - 19 = M - prefix_mass - 19.</div></div>
+<div class="sp"><div class="sn">7</div><div class="sc"><strong>For each suffix ion type</strong>, calculate expected mass:
+<div class="fm">y-ion:     suffix_residue_mass + 19
+y-13C:     suffix_residue_mass + 20
+y-NH3:     suffix_residue_mass + 2
+y-H2O:     suffix_residue_mass + 1</div></div></div>
+<div class="sp"><div class="sn">8</div><div class="sc"><strong>Check peaks and look up scores</strong> just as for prefix ions.</div></div>
+<div class="sp"><div class="sn">9</div><div class="sc"><strong>Total score</strong> = sum of all prefix log-scores + sum of all suffix log-scores.</div></div>
+</div>
+<h3>Quick Reference: What to Add</h3>
+<div class="cd rl">
+<p>Peak found at expected mass &rarr; add the <strong>positive</strong> Log(Gain) value.</p>
+<p>Peak NOT found &rarr; add the <strong>negative</strong> Log(Loss) value.</p>
+<p>The total will be positive if there is good evidence, negative or near-zero if poor match.</p>
+</div>
+</div>
+<!-- DE NOVO -->
+<div class="sec" id="denovo">
+<h2>Spectrum Graphs &amp; De Novo Sequencing</h2>
+<p class="si">Determining the amino acid sequence directly from the spectrum without a database.</p>
+<h3>Why De Novo?</h3>
+<p>Many sequences are missing from databases. Biology creates new sequences every day (mutation, antibodies, immune peptides). Exhaustive enumeration is impractical: most spectra consider at least 10^9 possible sequences, some go up to &gt;10^20.</p>
+<h3>Spectrum Graph Definition</h3>
+<div class="cd hl"><div class="ct">Definition (from slides)</div>
+<p>For spectrum of mass M, charge 1:</p>
+<p>1. Define vertex v_m for every peak at mass m. Score(v_m) = intensity at mass m.</p>
+<p>2. Add v_1 for b-ion zero (start). Add v_P for last b-ion at mass <strong>M - 18</strong> (end of peptide).</p>
+<p>3. Edge from v_j to v_i if <strong>i - j is an amino acid mass</strong>.</p>
+</div>
+<h3>Dynamic Programming Sequencing</h3>
+<div class="cd bl">
+<p><code>AminoAcid(m)</code> = the amino acid whose mass is m.</p>
+<p><code>BestPath(v_i) = Score(v_i) + max over all predecessors v_j of BestPath(v_j)</code></p>
+<p>where v_j iterates over predecessors such that i - j is a valid amino acid mass.</p>
+<p>Using v_k as highest-scoring predecessor: <code>Label(v_i) = AminoAcid(i - k)</code></p>
+<p>Sequence reconstructed backwards from v_P.</p>
+</div>
+<h3>Limitations</h3>
+<div class="cd rl">
+<p>Missing peaks &rarr; incomplete reconstructions, mass gaps with many possible sequences.</p>
+<p>Noise peaks can make incorrect sequences score higher.</p>
+<p>Ambiguity between b and y ions (no way to know in advance).</p>
+<p>Specific: y1 for E = 129+19 = 148; b1 for F = 147+1 = 148. These are indistinguishable.</p>
+<p>Proline (P, mass 97): if b1 for P is at mass 98, it might be missing from the spectrum.</p>
+</div>
+<h3>Sequence Tags</h3>
+<p>An adaptation: extract subsequences only from high-intensity/high-scoring regions, avoiding uncertain regions. Paths can start and end at any vertex.</p>
+</div>
+
+<!-- DE NOVO ALGO -->
+<div class="sec" id="denovo-algo">
+<h2>De Novo Algorithm &amp; Spreadsheet</h2>
+<p class="si">Step-by-step procedure for the spreadsheet-based de novo sequencing, as in Assignment 2.</p>
+<h3>Y-Ion Series Algorithm (Slide 10, Lectures 6-7)</h3>
+<div class="cd hl"><div class="ct">Information Columns</div>
+<p><strong>Peak mass:</strong> measured mass of each peak.</p>
+<p><strong>Peak intensity:</strong> height of each peak.</p>
+<p><strong>Amino acid predecessors:</strong> For each peak of mass P, list (A, M) tuples where mass(A) = P - M and M is the mass of a predecessor peak.</p>
+</div>
+<div class="cd bl"><div class="ct">Algorithm Columns</div>
+<p><strong>Y-ion path to end:</strong> Does this peak connect (via some path of amino acid mass differences) to the y-ion mass for the total peptide mass? (mass 800 for PEPTIDE example).</p>
+<p><strong>Path score:</strong> Best y-ion path score up to this peak.</p>
+<p><strong>Path sequence:</strong> Amino acid sequence of the highest-scoring path up to this peak.</p>
+</div>
+<h3>Step-by-Step</h3>
+<div class="cd">
+<div class="sp"><div class="sn">1</div><div class="sc">List all peaks sorted by mass. Include the start vertex and end vertex (the y-ion mass corresponding to total peptide mass).</div></div>
+<div class="sp"><div class="sn">2</div><div class="sc">For each peak at mass P, find predecessors: peaks at mass M where P - M = valid amino acid mass.</div></div>
+<div class="sp"><div class="sn">3</div><div class="sc">Check "path to end": work backwards from the end vertex. A peak has a path to end if it IS the end, or if any of its successors (peaks reached by adding an amino acid mass) have a path to end.</div></div>
+<div class="sp"><div class="sn">4</div><div class="sc">Calculate path score: BestPath(v_i) = Score(v_i) + max(BestPath(predecessors that connect to start)).</div></div>
+<div class="sp"><div class="sn">5</div><div class="sc">Track the sequence: at each node, record which amino acid was used from the best predecessor.</div></div>
+<div class="sp"><div class="sn">6</div><div class="sc">Final: the sequence and score at the end vertex = the de novo result.</div></div>
+</div>
+<h3>Missing Peaks Solution</h3>
+<div class="cd">
+<p>Add vertices at every integer mass (score = 0 for masses with no peak). This allows paths through unobserved masses. Defines M vertices for a spectrum of mass M.</p>
+</div>
+<h3>Converting Y-ions to B-ion Masses</h3>
+<div class="cd hl">
+<p>If spectrum parent mass = M (charge 1): peptide mass = M - 18 - 1.</p>
+<p>Matching y-ion for a b-ion at mass m: <strong>y-ion mass = M + 1 - m</strong>.</p>
+<p>Matching b-ion for a y-ion at mass m: <strong>b-ion mass = M + 1 - m</strong>.</p>
+</div>
+</div>
+
+<!-- COUNTING -->
+<div class="sec" id="counting">
+<h2>Counting Peptides &amp; P-values</h2>
+<p class="si">Using dynamic programming to count possible peptides and calculate statistical significance.</p>
+<h3>NumPaths Recursion</h3>
+<div class="cd hl">
+<p><code>ConnectToStart(v)</code> = true if v = v_1, or if any predecessor v_j has ConnectToStart(v_j) = true.</p>
+<p><code>NumPaths(v_i)</code>: If v_i = v_1 then 1. Else: SUM of NumPaths(v_j) over valid predecessors with ConnectToStart = true.</p>
+</div>
+<h3>Counts(m, t) Matrix</h3>
+<div class="cd bl">
+<p>For a peptide of mass M matched to Boolean spectrum B (B[m] = 1 if peak at mass m, 0 otherwise):</p>
+<div class="fm">Counts(m, t) = SUM over amino acid masses a of: Counts(m - a, t - B[m])
+
+Counts(m, t) = number of sequences of mass m matching exactly t peaks.
+Last column = histogram of how many sequences match for each number of peaks.</div>
+</div>
+<h3>With Intensity/Likelihood Scores</h3>
+<div class="fm">Counts(m, t) = SUM over a of: Counts(m - a, t - S[m])
+where S[m] = intensity at mass m</div>
+<h3>With Amino Acid Probabilities</h3>
+<div class="cd hl">
+<p>Not all amino acids equally common. Humans cannot synthesize 9 essential AAs: F, V, T, W, M, L, I, K, H.</p>
+<div class="fm">Counts(m, t) = SUM over a of: Prob(a) x Counts(m - a, t - S[m])</div>
+<p>Counts(M, T) = probability that a random peptide of mass M matches with score T.</p>
+</div>
+<h3>P-value</h3>
+<div class="cd rl"><div class="ct">P-value Definition</div>
+<div class="fm">p-value = Prob(score(R) >= T) = SUM of Counts(M, t) for all t >= T</div>
+<p><strong>Expected false matches in database:</strong> p x N (N = database peptides matching parent mass).</p>
+<p><strong>Prob of at least one false match:</strong> 1 - (1 - p)^N.</p>
+</div>
+<h3>Hands-On Example (from slides)</h3>
+<div class="cd">
+<p>Peptide of mass 12 Da, Boolean spectrum B, only two amino acid masses: 2 Da and 3 Da.</p>
+<p>Formula for cell: <code>IF(condition, formula_if_true, formula_if_false)</code></p>
+<p>With probabilities: Prob(mass=2) = 0.6, Prob(mass=3) = 0.4. Define named ranges "Prob2" and "Prob3" in spreadsheet.</p>
+</div>
+</div>
+<!-- FDR -->
+<div class="sec" id="fdr">
+<h2>False Discovery Rates (FDR)</h2>
+<p class="si">Assessing reliability of identifications with target-decoy strategies.</p>
+<h3>Standard Definitions</h3>
+<div class="cd hl">
+<p><strong>True Positive (TP):</strong> Sample peptide generated the spectrum AND algorithm identifies it.</p>
+<p><strong>False Positive (FP):</strong> Algorithm identifies peptide NOT in the sample.</p>
+<p><strong>True Negative (TN):</strong> Peptide NOT in sample, NOT identified.</p>
+<p><strong>False Negative (FN):</strong> Peptide IS in sample but NOT identified.</p>
+</div>
+<h3>FPR vs. FDR</h3>
+<div class="cd rl"><div class="ct">Critical Distinction</div>
+<div class="fm">False Positive Rate = FP / (FP + TN)
+  Uses distribution of incorrect scores (negative, from decoy).
+  Equivalent to p-value in the distribution of negative scores.
+
+False Discovery Rate = FP / (FP + TP)
+  Percentage of decoy matches above the score threshold.</div>
+</div>
+<h3>Target-Decoy Strategy</h3>
+<div class="cd bl">
+<p><strong>Null hypothesis:</strong> Each spectrum is generated by a random (peptide-like) amino acid sequence.</p>
+<p><strong>Practical FDR:</strong> FDR = (# decoy hits) / (# target hits).</p>
+</div>
+<h3>Three Levels of FDR</h3>
+<div class="cd hl">
+<p><strong>Spectrum-level FDR:</strong> Each spectrum = one observation. Error rate does NOT transfer to higher levels.</p>
+<p><strong>Peptide-level FDR:</strong> Each peptide assigned best-scoring spectrum's score. Multiple spectra for same peptide reinforce <em>consistency</em>, not <em>correctness</em>.</p>
+<p><strong>Protein-level FDR:</strong> Combines peptide scores (e.g., sum of scores of uniquely-mapped peptides). Complicated by peptide sharing across proteins.</p>
+</div>
+<div class="qi"><div class="qq">How to compute spectrum-level FDR from a PSM list?<span class="ar">&#9654;</span></div><div class="qa">
+<p>Sort all PSMs by score (descending). At each score threshold, count decoy hits and target hits above threshold. FDR = (# decoy) / (# target). Number of IDs at FDR &lt; X% = number of target hits at threshold where FDR first drops below X%.</p>
+</div></div>
+<div class="qi"><div class="qq">Peptide-level FDR: how is it different?<span class="ar">&#9654;</span></div><div class="qa">
+<p>For each unique peptide sequence, keep only the ONE best score among all its PSMs. Apply FDR on this reduced list. Stricter because you lose credit for multiple spectra of the same peptide.</p>
+</div></div>
+<div class="qi"><div class="qq">Protein-level FDR: how to calculate?<span class="ar">&#9654;</span></div><div class="qa">
+<p>Calculate protein scores as sum of matched peptide scores (uniquely mapped). Apply decoy-based FDR on protein scores. You may need to satisfy BOTH protein FDR &lt; X% AND peptide FDR &lt; X% simultaneously.</p>
+</div></div>
+</div>
+
+<!-- PROTEIN INFERENCE -->
+<div class="sec" id="protein-inf">
+<h2>Protein Inference &amp; Parsimony</h2>
+<p class="si">Going from peptide identifications to protein identifications.</p>
+<h3>Why Peptides are Shared</h3>
+<p>Duplication, fusion, loss of N-terminus, divergent paralogs cause peptides to map to multiple proteins. Protein-peptide assignment is complicated by isoforms (different versions of same gene), paralogs (related genes in same species), orthologs (matching gene in other species).</p>
+<h3>Protein Contextual Types</h3>
+<div class="cd hl"><div class="ct">Definitions</div>
+<p><strong>HasUniqueMatch:</strong> At least one peptide matched uniquely to this protein only.</p>
+<p><strong>Indiscernible:</strong> Two or more proteins match exactly the same set of peptides.</p>
+<p><strong>Subset:</strong> All peptides of protein A are a subset of protein B's peptides.</p>
+<p><strong>Subsumable:</strong> All peptides for a protein also support other proteins (complex overlap).</p>
+</div>
+<h3>Maximum Parsimony (Greedy)</h3>
+<div class="cd bl">
+<div class="sp"><div class="sn">1</div><div class="sc">Select all proteins with uniquely-matched peptides.</div></div>
+<div class="sp"><div class="sn">2</div><div class="sc">Discard subset and subsumable proteins.</div></div>
+<div class="sp"><div class="sn">3</div><div class="sc">Greedy set cover: select protein matching most remaining peptides, assign those peptides. Repeat until all peptides assigned.</div></div>
+</div>
+<h3>Set Cover Problem</h3>
+<div class="cd">
+<p><strong>Input:</strong> N proteins (each = set of matched peptides). <strong>Output:</strong> K &le; N proteins whose union covers all peptides. <strong>Objective:</strong> minimize K.</p>
+<p>NP-Hard. Greedy returns at most K x log(N) sets. Generally accepted in proteomics.</p>
+</div>
+<h3>Database Choice Impact</h3>
+<div class="cd rl">
+<p>SwissProt reviewed: 20,381. With isoforms: 42,426. Full reference: 93,588.</p>
+<p>Larger databases find more "proteins" but most additional ones come from mapping same peptides to isoforms. Only a small number of unique peptides distinguish true isoforms. Proteins can change names between database versions.</p>
+</div>
+</div>
+<!-- CALCULATORS -->
+<div class="sec" id="calculators">
+<h2>Interactive Calculators</h2>
+<p class="si">All calculators use the exact amino acid masses from the course slides.</p>
+<h3>Peptide m/z Calculator</h3>
+<div class="cs"><h4>Calculate Parent Mass (m/z)</h4>
+<div class="cr"><label>Peptide sequence:</label><input type="text" id="mz-seq" placeholder="e.g. PEPTIDE" style="width:260px;text-transform:uppercase"></div>
+<div class="cr"><label>Charge (z):</label><input type="number" id="mz-z" value="1" min="1" max="10" style="width:80px"></div>
+<div class="cr"><label>Mass type:</label><select id="mz-t"><option value="mono">Monoisotopic</option><option value="int">Integer</option></select></div>
+<div class="cr"><label>Modification mass (Da):</label><input type="number" id="mz-mod" value="0" step="0.001" style="width:120px"><span style="font-size:12px;color:#888;margin-left:6px">e.g. 15.995 for oxidation on M</span></div>
+<button class="cb" onclick="calcMZ()">Calculate</button>
+<div class="crs" id="mz-r"></div></div>
+
+<h3>Fragment Ion Table Generator</h3>
+<div class="cs"><h4>Generate All b/y Ions</h4>
+<div class="cr"><label>Peptide sequence:</label><input type="text" id="fg-seq" placeholder="e.g. PEPTIDE" style="width:260px;text-transform:uppercase"></div>
+<div class="cr"><label>Mass type:</label><select id="fg-t"><option value="mono">Monoisotopic</option><option value="int">Integer</option></select></div>
+<div class="cr"><label>Modification (pos:mass):</label><input type="text" id="fg-mod" placeholder="e.g. 3:15.995" style="width:200px"><span style="font-size:12px;color:#888;margin-left:6px">position:mass (1-indexed)</span></div>
+<button class="cb" onclick="calcFrag()">Generate Table</button>
+<div class="crs" id="fg-r" style="overflow-x:auto"></div></div>
+
+<h3>Specific Ion m/z Calculator</h3>
+<div class="cs"><h4>Calculate a Specific Fragment Ion</h4>
+<div class="cr"><label>Peptide sequence:</label><input type="text" id="si-seq" placeholder="e.g. VQPTESIVR" style="width:260px;text-transform:uppercase"></div>
+<div class="cr"><label>Ion type:</label><select id="si-ion"><option value="b">b-ion</option><option value="y">y-ion</option><option value="a">a-ion</option></select></div>
+<div class="cr"><label>Ion number:</label><input type="number" id="si-n" value="4" min="1" max="50" style="width:80px"></div>
+<div class="cr"><label>Ion charge:</label><input type="number" id="si-z" value="1" min="1" max="5" style="width:80px"></div>
+<div class="cr"><label>Mass type:</label><select id="si-t"><option value="mono">Monoisotopic</option><option value="int">Integer</option></select></div>
+<div class="cr"><label>Modification (pos:mass):</label><input type="text" id="si-mod" placeholder="e.g. 3:15.995" style="width:200px"></div>
+<button class="cb" onclick="calcIon()">Calculate</button>
+<div class="crs" id="si-r"></div></div>
+
+<h3>Log-Likelihood Score Calculator</h3>
+<div class="cs"><h4>Score a Prefix Mass</h4>
+<p style="font-size:13px;color:#888;margin-bottom:10px">Enter which ions are observed (detected within 0.5 Da tolerance) at a given prefix mass.</p>
+<div class="cr"><label>b-ion detected?</label><select id="sc-b"><option value="1">Yes</option><option value="0">No</option></select></div>
+<div class="cr"><label>b-13C detected?</label><select id="sc-b13"><option value="0">No</option><option value="1">Yes</option></select></div>
+<div class="cr"><label>b-NH3 detected?</label><select id="sc-bnh3"><option value="0">No</option><option value="1">Yes</option></select></div>
+<div class="cr"><label>b-H2O detected?</label><select id="sc-bh2o"><option value="0">No</option><option value="1">Yes</option></select></div>
+<div class="cr"><label>a-ion detected?</label><select id="sc-a"><option value="0">No</option><option value="1">Yes</option></select></div>
+<div class="cr"><label>a-NH3 detected?</label><select id="sc-anh3"><option value="0">No</option><option value="1">Yes</option></select></div>
+<div class="cr"><label>a-H2O detected?</label><select id="sc-ah2o"><option value="0">No</option><option value="1">Yes</option></select></div>
+<hr style="margin:10px 0;border:none;border-top:1px solid #e0d8ce">
+<div class="cr"><label>y-ion detected?</label><select id="sc-y"><option value="0">No</option><option value="1">Yes</option></select></div>
+<div class="cr"><label>y-13C detected?</label><select id="sc-y13"><option value="0">No</option><option value="1">Yes</option></select></div>
+<div class="cr"><label>y-NH3 detected?</label><select id="sc-ynh3"><option value="0">No</option><option value="1">Yes</option></select></div>
+<div class="cr"><label>y-H2O detected?</label><select id="sc-yh2o"><option value="0">No</option><option value="1">Yes</option></select></div>
+<button class="cb" onclick="calcScore()">Calculate Score</button>
+<div class="crs" id="sc-r"></div></div>
+</div>
+
+<!-- MASSIVE GUIDE -->
+<div class="sec" id="massive-guide">
+<h2>MassIVE Website Guide</h2>
+<p class="si">How to navigate MassIVE for assignments and quizzes. Step-by-step instructions for every major action.</p>
+
+<h3>Viewing Search Results</h3>
+<div class="cd hl">
+<div class="sp"><div class="sn">1</div><div class="sc"><strong>M-SPLIT results (spectral library search):</strong> Use the <strong>Cosine(M,A)</strong> column to evaluate match quality. Click the spectrum icon at the far left of each row to inspect individual spectra.</div></div>
+<div class="sp"><div class="sn">2</div><div class="sc"><strong>MS-GF+ results (database search):</strong> Use <strong>SpecProb</strong> and <strong>DB E-Value</strong> columns to evaluate quality. SpecProb = p-value of match among all possible peptides. DB E-Value = expected number of matches in the reference proteome. Click the Lorikeet visualization panel to inspect matches.</div></div>
+<div class="sp"><div class="sn">3</div><div class="sc"><strong>MODa results (open/blind search):</strong> Sequences show modifications like <code>(F,-10.059)</code>. Click "View in MassIVE" then "Search MassIVE-KB reference spectra".</div></div>
+</div>
+
+<h3>Filtering Results Tables</h3>
+<div class="cd bl">
+<div class="sp"><div class="sn">1</div><div class="sc">Find the filter box for the column you want (e.g., "Peptide" column).</div></div>
+<div class="sp"><div class="sn">2</div><div class="sc">Enter your search term (e.g., a peptide sequence like LSKEEIER).</div></div>
+<div class="sp"><div class="sn">3</div><div class="sc">Click the <strong>"Apply filters"</strong> button on the top-left of the table.</div></div>
+<div class="sp"><div class="sn">4</div><div class="sc">You can filter by any column: Charge, Protein, Peptide, etc.</div></div>
+</div>
+
+<h3>Inspecting a Spectrum</h3>
+<div class="cd hl">
+<div class="sp"><div class="sn">1</div><div class="sc">Click the <strong>spectrum icon</strong> on the far left of any result row.</div></div>
+<div class="sp"><div class="sn">2</div><div class="sc">The interactive viewer opens showing the annotated MS/MS spectrum.</div></div>
+<div class="sp"><div class="sn">3</div><div class="sc">Use the <strong>"Ions" panel</strong> (top-right of the interactive spectrum viewer) to label peaks matching expected ion masses. This is critical for Assignment 2 -- it helps you see which fragment ions are present.</div></div>
+<div class="sp"><div class="sn">4</div><div class="sc">Look for: consecutive y-ion or b-ion series, high explained intensity, absence of many unexplained peaks, high-intensity peaks near Proline residues.</div></div>
+</div>
+
+<h3>Comparing Spectra via USI</h3>
+<div class="cd bl">
+<div class="sp"><div class="sn">1</div><div class="sc">Copy the <strong>USI</strong> for your experimental spectrum from the results view.</div></div>
+<div class="sp"><div class="sn">2</div><div class="sc">Go to MassIVE-KB and search for the <strong>reference spectrum</strong> for the same peptide. You can also use the reference spectra links provided in assignments.</div></div>
+<div class="sp"><div class="sn">3</div><div class="sc">Open the <strong>Spectrum Identifier Resolver</strong> and paste both USIs into the two input fields.</div></div>
+<div class="sp"><div class="sn">4</div><div class="sc">Click <strong>"Reset Figure"</strong> (if needed). The tool shows a mirror plot with shared and unique peaks, plus a <strong>cosine score</strong> quantifying similarity.</div></div>
+<div class="sp"><div class="sn">5</div><div class="sc">For modified peptides from MODa: if the peptide has a mass offset, scroll to the <strong>bottom of the Resolver page</strong> to change parameters that compensate for the mass difference. Then scroll back up for updated results.</div></div>
+</div>
+
+<h3>Evaluating Match Quality (Assignment-Style)</h3>
+<div class="cd rl"><div class="ct">Qualitative Assessment</div>
+<p>Describe what you see: Are most major peaks explained? Is there a consecutive ion series? Are there many unexplained high-intensity peaks? How does the spectrum visually compare between your experimental spectrum and the MassIVE-KB reference?</p>
+</div>
+<div class="cd hl"><div class="ct">Quantitative Assessment</div>
+<p>Use <strong>USI cosines</strong> from the Spectrum Identifier Resolver. Higher cosine = better match. Compare the cosine of your experimental spectrum vs. reference against the cosine of alternative peptide matches vs. their references. The peptide whose experimental-to-reference cosine is highest is the best match.</p>
+</div>
+
+<h3>COVID Dataset (MSV000085507)</h3>
+<div class="cd">
+<p>Contains spectra matching SARS-CoV-2 virus proteins AND human proteins. Used in Assignment 1 for hemoglobin protein P69905.</p>
+<p>To find peptide identifications: filter by peptide sequence or protein accession. Check AA coordinates of identified peptides for calculating protein coverage. Coverage = (number of residues covered by identified peptides) / (total residues in the region).</p>
+</div>
+
+<h3>Key Columns to Know</h3>
+<div class="tw"><table>
+<thead><tr><th>Column</th><th>Meaning</th><th>Used In</th></tr></thead>
+<tbody>
+<tr><td>Cosine(M,A)</td><td>Cosine similarity between query and library spectrum</td><td>M-SPLIT results</td></tr>
+<tr><td>SpecProb</td><td>P-value of match (lower = better)</td><td>MS-GF+ results</td></tr>
+<tr><td>DB E-Value</td><td>Expected false matches in DB (lower = better)</td><td>MS-GF+ results</td></tr>
+<tr><td>Charge</td><td>Charge state of the PSM</td><td>All results</td></tr>
+<tr><td>Peptide</td><td>Identified peptide sequence</td><td>All results</td></tr>
+<tr><td>PSP PTM variants</td><td>Association with disease (from PhosphoSitePlus)</td><td>M-SPLIT filtered results</td></tr>
+<tr><td>Num_&lt;cell_line&gt;_spectra</td><td>Count of spectra per cell line</td><td>M-SPLIT filtered results</td></tr>
+</tbody></table></div>
+</div>
+
+<!-- PRACTICE -->
+<div class="sec" id="practice">
+<h2>Practice Q&amp;A</h2>
+<p class="si">Sample problems covering the types of questions from Assignments 1 and 2. Click each question to reveal the walkthrough.</p>
+
+<h3>Peptide Mass Calculations</h3>
+<div class="qi"><div class="qq">Given peptide VQPTESIVR from SARS-CoV-2 Spike glycoprotein, what is the m/z at charge 2?<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>Step 1:</strong> Sum the amino acid masses (monoisotopic from course table):</p>
+<p>V(99.06841) + Q(128.05858) + P(97.05276) + T(101.04768) + E(129.04259) + S(87.03203) + I(113.08406) + V(99.06841) + R(156.10111) = sum</p>
+<p><strong>Step 2:</strong> Apply formula: m/z = (sum + 18.010565 + 2 x 1.007276) / 2</p>
+<p>Use the Calculators page to verify your answer.</p>
+</div></div>
+
+<div class="qi"><div class="qq">How do you calculate b4+ (singly-charged) for VQPTESIVR?<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>b4</strong> = prefix of first 4 amino acids = VQPT.</p>
+<p>Sum = V(99.06841) + Q(128.05858) + P(97.05276) + T(101.04768) = prefix_sum</p>
+<p>b4+ m/z = (prefix_sum + 1 x 1.007276) / 1 = prefix_sum + 1.007276</p>
+</div></div>
+
+<div class="qi"><div class="qq">How do you calculate y8++ (doubly-charged) for VQPTESIVR?<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>y8</strong> = suffix of last 8 amino acids. VQPTESIVR has 9 AAs, so y8 = QPTESIVR (everything except the first V).</p>
+<p>suffix_sum = Q(128.05858) + P(97.05276) + T(101.04768) + E(129.04259) + S(87.03203) + I(113.08406) + V(99.06841) + R(156.10111)</p>
+<p>y8++ m/z = (suffix_sum + 18.010565 + 2 x 1.007276) / 2</p>
+</div></div>
+
+<h3>Tryptic Digestion</h3>
+<div class="qi"><div class="qq">How to find all fully-tryptic peptides from a protein?<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>Step 1:</strong> Scan left to right. Mark every position after R or K, UNLESS the next amino acid is P. The protein start and protein end are also boundaries.</p>
+<p><strong>Step 2:</strong> Each segment between consecutive boundaries = one fully-tryptic peptide (0 missed cleavages).</p>
+<p><strong>Example (P69905):</strong> MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTK...</p>
+<p>K at position 8 (next is T, not P) &rarr; cleavage. First peptide: MVLSPADK.</p>
+<p>R at position 32 (check next AA) &rarr; potential cleavage. Continue through entire sequence.</p>
+<p><strong>Missed cleavages:</strong> A peptide with 1 missed cleavage spans 2 consecutive tryptic segments. E.g., MVLSPADKTNVK has 1 missed cleavage (skips the K at position 8).</p>
+</div></div>
+
+<div class="qi"><div class="qq">What is a semi-tryptic peptide with zero missed cleavages?<span class="ar">&#9654;</span></div><div class="qa">
+<p>A semi-tryptic peptide has ONE tryptic end and ONE non-tryptic end, with no internal missed cleavage sites.</p>
+<p>Example: If MVLSPADK is a tryptic peptide, then VLSPADK would be semi-tryptic (starts at V, which is not preceded by K/R, but ends at K). It has zero missed cleavages because there are no K/R-not-followed-by-P sites internal to VLSPADK.</p>
+</div></div>
+
+<h3>Log-Likelihood Scoring</h3>
+<div class="qi"><div class="qq">Calculate the match score for a prefix mass using only prefix (a/b) ions.<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>Step 1:</strong> For prefix mass M, calculate 7 expected masses:</p>
+<p>b: M+1, b-13C: M+2, b-NH3: M-16, b-H2O: M-17, a: M-27, a-NH3: M-44, a-H2O: M-45</p>
+<p><strong>Step 2:</strong> For each, check if a peak exists within 0.5 Da in the spectrum (use the "Ions" panel in the interactive viewer).</p>
+<p><strong>Step 3:</strong> Sum the log-likelihood values:</p>
+<p>Detected &rarr; b: +2.33, b13C: +0.14, bNH3: +0.58, bH2O: +0.26, a: +0.77, aNH3: +0.14, aH2O: +0.58</p>
+<p>Missing &rarr; b: -0.85, b13C: -0.02, bNH3: -0.08, bH2O: -0.03, a: -0.12, aNH3: -0.02, aH2O: -0.08</p>
+<p>The sum = your prefix-only score.</p>
+</div></div>
+
+<div class="qi"><div class="qq">Now add suffix (y) ions to get the combined score.<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>Step 1:</strong> Find complementary suffix. b-ion = prefix_mass + 1. y-ion = M + 1 - b-ion = M - prefix_mass. Suffix residue mass = y-ion - 19.</p>
+<p><strong>Step 2:</strong> Calculate 4 expected suffix masses from suffix_residue_mass:</p>
+<p>y: +19, y-13C: +20, y-NH3: +2, y-H2O: +1</p>
+<p><strong>Step 3:</strong> Check peaks, sum log values:</p>
+<p>Detected &rarr; y: +2.38, y13C: +0.68, yNH3: +0.14, yH2O: +0.49</p>
+<p>Missing &rarr; y: -0.91, y13C: -0.10, yNH3: -0.02, yH2O: -0.07</p>
+<p><strong>Total = prefix score + suffix score.</strong></p>
+</div></div>
+
+<h3>Unit Mass Error</h3>
+<div class="qi"><div class="qq">How to calculate unit mass error for a PSM?<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>Step 1:</strong> Calculate theoretical m/z = (sum_AA_masses + 18.010565 + z x 1.007276) / z</p>
+<p><strong>Step 2:</strong> Unit mass error = experimental m/z - theoretical m/z (in Da).</p>
+<p>Example from Assignment 1: VDPVNFKLLSH matched to spectrum at m/z 1270, charge 1. Compute sum of AA masses, apply formula, subtract from 1270.</p>
+</div></div>
+
+<h3>FDR Calculations</h3>
+<div class="qi"><div class="qq">Given a PSM list with target/decoy hits, how to compute FDR at each level?<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>Spectrum-level:</strong> Sort all PSMs by score (descending). At each threshold: FDR = #decoy / #target. Count target IDs where FDR &lt; your cutoff (e.g., 10%).</p>
+<p><strong>Peptide-level:</strong> For each unique peptide sequence, keep only the ONE best score. Re-sort. Apply same FDR calculation on this reduced list.</p>
+<p><strong>Protein-level:</strong> Calculate protein scores as sum of scores of matched peptides (mapped uniquely). Sort proteins by score. Apply FDR on protein scores.</p>
+<p><strong>Combined:</strong> You may need to satisfy BOTH protein FDR &lt; 10% AND peptide FDR &lt; 10% simultaneously. The number of protein IDs meeting both criteria may be less than meeting either alone.</p>
+</div></div>
+
+<h3>Protein Inference</h3>
+<div class="qi"><div class="qq">How to classify proteins as HasUniqueMatch, Indiscernible, Subset, or Subsumable?<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>HasUniqueMatch:</strong> At least one peptide maps ONLY to this protein and no other.</p>
+<p><strong>Indiscernible:</strong> Two or more proteins share the EXACT same set of matched peptides -- they cannot be distinguished.</p>
+<p><strong>Subset:</strong> All peptides of protein A are also matched to protein B, but B has additional peptides that A does not.</p>
+<p><strong>Subsumable:</strong> Every peptide of protein A is shared with at least one other protein, but no single other protein contains ALL of A's peptides. This is a complex overlap situation.</p>
+<p>To classify: list all peptides for each protein/isoform, compare the sets, and apply definitions.</p>
+</div></div>
+
+<h3>De Novo Sequencing</h3>
+<div class="qi"><div class="qq">How to fill in the de novo sequencing spreadsheet?<span class="ar">&#9654;</span></div><div class="qa">
+<p><strong>Step 1:</strong> List all spectrum peaks sorted by mass. Note their intensities.</p>
+<p><strong>Step 2:</strong> For each peak P, find predecessors: peaks at mass M where P - M equals a valid amino acid mass (check the AA integer mass table: 57, 71, 87, 97, 99, 101, 103, 113, 114, 115, 128, 129, 131, 137, 147, 156, 163, 186).</p>
+<p><strong>Step 3:</strong> Determine "path to end": work backwards from the end vertex. A peak has path to end if it IS the end vertex, or if any successor peak (reached by adding an AA mass) has path to end.</p>
+<p><strong>Step 4:</strong> Dynamic programming path score: for each peak, BestScore = peak_intensity + max(BestScore of valid predecessors that connect to start).</p>
+<p><strong>Step 5:</strong> Track sequence: at each peak, record which AA edge gave the best score.</p>
+<p><strong>Step 6:</strong> Read final sequence from the end vertex by tracing back through the best predecessors.</p>
+</div></div>
+</div>
+
+</div><!-- /content area -->
+</main>
+
+<script>
+// Amino acid masses from course slides
+const AA_MONO = {A:71.03711,R:156.10111,N:114.04293,D:115.02694,C:103.00919,E:129.04259,Q:128.05858,G:57.02146,H:137.05891,I:113.08406,L:113.08406,K:128.09496,M:131.04049,F:147.06841,P:97.05276,S:87.03203,T:101.04768,W:186.07931,Y:163.06333,V:99.06841};
+const AA_INT = {A:71,R:156,N:114,D:115,C:103,E:129,Q:128,G:57,H:137,I:113,L:113,K:128,M:131,F:147,P:97,S:87,T:101,W:186,Y:163,V:99};
+const H2O_MONO = 18.010565;
+const H_MONO = 1.007276;
+const H2O_INT = 18;
+const H_INT = 1;
+
+// Navigation
+document.querySelectorAll('.nl').forEach(link => {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.nl').forEach(l => l.classList.remove('ac'));
+    document.querySelectorAll('.sec').forEach(s => s.classList.remove('ac'));
+    this.classList.add('ac');
+    const sec = document.getElementById(this.dataset.s);
+    if(sec) sec.classList.add('ac');
+    window.scrollTo(0,0);
+    // close mobile sidebar
+    document.querySelector('.sb').classList.remove('op');
+  });
+});
+
+// Q&A toggle
+document.addEventListener('click', function(e) {
+  const q = e.target.closest('.qq');
+  if(q) q.parentElement.classList.toggle('op');
+});
+
+function getAA(type) { return type === 'mono' ? AA_MONO : AA_INT; }
+function getH2O(type) { return type === 'mono' ? H2O_MONO : H2O_INT; }
+function getH(type) { return type === 'mono' ? H_MONO : H_INT; }
+
+function parseMods(modStr) {
+  const mods = {};
+  if(!modStr || !modStr.trim()) return mods;
+  modStr.split(',').forEach(m => {
+    const parts = m.trim().split(':');
+    if(parts.length === 2) mods[parseInt(parts[0])] = parseFloat(parts[1]);
+  });
+  return mods;
+}
+
+function sumAA(seq, type, mods) {
+  const aa = getAA(type);
+  let s = 0;
+  for(let i = 0; i < seq.length; i++) {
+    const c = seq[i].toUpperCase();
+    if(aa[c] === undefined) return NaN;
+    s += aa[c];
+    if(mods && mods[i+1]) s += mods[i+1];
+  }
+  return s;
+}
+
+// m/z calculator
+function calcMZ() {
+  const seq = document.getElementById('mz-seq').value.toUpperCase().trim();
+  const z = parseInt(document.getElementById('mz-z').value);
+  const type = document.getElementById('mz-t').value;
+  const mod = parseFloat(document.getElementById('mz-mod').value) || 0;
+  if(!seq) { document.getElementById('mz-r').innerHTML = 'Enter a sequence.'; return; }
+  const s = sumAA(seq, type);
+  if(isNaN(s)) { document.getElementById('mz-r').innerHTML = 'Invalid amino acid in sequence.'; return; }
+  const total = s + mod;
+  const h2o = getH2O(type);
+  const h = getH(type);
+  const mz = (total + h2o + z * h) / z;
+  const r = document.getElementById('mz-r');
+  r.innerHTML = `<strong>Sequence:</strong> ${seq} (length ${seq.length})
+<strong>Sum of AA masses:</strong> ${total.toFixed(type==='mono'?5:0)}
+<strong>+ H2O:</strong> ${h2o}
+<strong>+ ${z} x charge:</strong> ${(z*h).toFixed(type==='mono'?6:0)}
+<strong>Total mass:</strong> ${(total + h2o + z*h).toFixed(type==='mono'?5:0)}
+<strong>m/z (z=${z}):</strong> ${mz.toFixed(type==='mono'?5:1)}`;
+}
+
+// Fragment table
+function calcFrag() {
+  const seq = document.getElementById('fg-seq').value.toUpperCase().trim();
+  const type = document.getElementById('fg-t').value;
+  const mods = parseMods(document.getElementById('fg-mod').value);
+  if(!seq) return;
+  const aa = getAA(type);
+  const h2o = getH2O(type);
+  const h = getH(type);
+  const n = seq.length;
+  const totalAA = sumAA(seq, type, mods);
+  if(isNaN(totalAA)) { document.getElementById('fg-r').innerHTML = 'Invalid AA.'; return; }
+  let html = `<table><thead><tr><th>#</th><th>AA</th><th>AA Mass</th><th>Prefix</th><th>b-ion</th><th>b++ (z=2)</th><th>Suffix</th><th>y-ion</th><th>y++ (z=2)</th></tr></thead><tbody>`;
+  let prefix = 0;
+  for(let i = 0; i < n; i++) {
+    const c = seq[i];
+    const m = aa[c] + (mods[i+1] || 0);
+    prefix += m;
+    const suffix = totalAA - prefix;
+    const b = prefix + h;
+    const bpp = (prefix + 2*h)/2;
+    const y = suffix + h2o + h;
+    const ypp = (suffix + h2o + 2*h)/2;
+    const d = type==='mono' ? 5 : 0;
+    html += `<tr><td>${i+1}</td><td>${c}${mods[i+1]?'*':''}</td><td>${m.toFixed(d)}</td><td>${prefix.toFixed(d)}</td><td>b${i+1}: ${b.toFixed(d)}</td><td>${bpp.toFixed(d)}</td><td>${suffix.toFixed(d)}</td><td>y${n-i}: ${y.toFixed(d)}</td><td>${ypp.toFixed(d)}</td></tr>`;
+  }
+  html += `</tbody></table><div style="margin-top:8px"><strong>Total AA mass:</strong> ${totalAA.toFixed(type==='mono'?5:0)} | <strong>Parent M (z=1):</strong> ${(totalAA+h2o+h).toFixed(type==='mono'?5:0)}</div>`;
+  document.getElementById('fg-r').innerHTML = html;
+}
+
+// Specific ion
+function calcIon() {
+  const seq = document.getElementById('si-seq').value.toUpperCase().trim();
+  const ionType = document.getElementById('si-ion').value;
+  const ionN = parseInt(document.getElementById('si-n').value);
+  const ionZ = parseInt(document.getElementById('si-z').value);
+  const type = document.getElementById('si-t').value;
+  const mods = parseMods(document.getElementById('si-mod').value);
+  if(!seq) return;
+  const aa = getAA(type);
+  const h2o = getH2O(type);
+  const h = getH(type);
+  const n = seq.length;
+  if(ionN < 1 || ionN >= n) { document.getElementById('si-r').innerHTML = `Ion number must be between 1 and ${n-1}.`; return; }
+  let result = '';
+  if(ionType === 'b' || ionType === 'a') {
+    // prefix of first ionN amino acids
+    let prefix = 0;
+    let aas = '';
+    for(let i = 0; i < ionN; i++) {
+      prefix += aa[seq[i]] + (mods[i+1]||0);
+      aas += seq[i];
+    }
+    if(ionType === 'b') {
+      const mz = (prefix + ionZ * h) / ionZ;
+      result = `<strong>${ionType}${ionN} (charge ${ionZ}):</strong>
+Prefix: ${aas}
+Sum of AA masses: ${prefix.toFixed(type==='mono'?5:0)}
+Neutral mass (b) = prefix + H = ${(prefix+h).toFixed(type==='mono'?5:0)}
+m/z = (${prefix.toFixed(type==='mono'?5:0)} + ${ionZ} x ${h}) / ${ionZ} = <strong>${mz.toFixed(type==='mono'?5:1)}</strong>`;
+    } else {
+      // a-ion = b-ion - CO = prefix + H - CO
+      const co = type==='mono' ? 27.994915 : 28;
+      const mz = (prefix + ionZ * h - co) / ionZ;
+      result = `<strong>a${ionN} (charge ${ionZ}):</strong>
+Prefix: ${aas}
+Sum of AA masses: ${prefix.toFixed(type==='mono'?5:0)}
+a-ion neutral = prefix + H - CO = ${(prefix+h-co).toFixed(type==='mono'?5:0)}
+m/z = (${prefix.toFixed(type==='mono'?5:0)} + ${ionZ}x${h} - ${co}) / ${ionZ} = <strong>${mz.toFixed(type==='mono'?5:1)}</strong>`;
+    }
+  } else {
+    // y-ion: suffix of last ionN amino acids
+    let suffix = 0;
+    let aas = '';
+    for(let i = n - ionN; i < n; i++) {
+      suffix += aa[seq[i]] + (mods[i+1]||0);
+      aas += seq[i];
+    }
+    const mz = (suffix + h2o + ionZ * h) / ionZ;
+    result = `<strong>y${ionN} (charge ${ionZ}):</strong>
+Suffix: ${aas}
+Sum of AA masses: ${suffix.toFixed(type==='mono'?5:0)}
+y neutral = suffix + H2O = ${(suffix+h2o).toFixed(type==='mono'?5:0)}
+m/z = (${suffix.toFixed(type==='mono'?5:0)} + ${h2o} + ${ionZ} x ${h}) / ${ionZ} = <strong>${mz.toFixed(type==='mono'?5:1)}</strong>`;
+  }
+  document.getElementById('si-r').innerHTML = result;
+}
+
+// Log-likelihood score calculator
+function calcScore() {
+  const prefixIons = [
+    {id:'sc-b', name:'b-ion', gain:2.33, loss:-0.85},
+    {id:'sc-b13', name:'b-13C', gain:0.14, loss:-0.02},
+    {id:'sc-bnh3', name:'b-NH3', gain:0.58, loss:-0.08},
+    {id:'sc-bh2o', name:'b-H2O', gain:0.26, loss:-0.03},
+    {id:'sc-a', name:'a-ion', gain:0.77, loss:-0.12},
+    {id:'sc-anh3', name:'a-NH3', gain:0.14, loss:-0.02},
+    {id:'sc-ah2o', name:'a-H2O', gain:0.58, loss:-0.08}
+  ];
+  const suffixIons = [
+    {id:'sc-y', name:'y-ion', gain:2.38, loss:-0.91},
+    {id:'sc-y13', name:'y-13C', gain:0.68, loss:-0.10},
+    {id:'sc-ynh3', name:'y-NH3', gain:0.14, loss:-0.02},
+    {id:'sc-yh2o', name:'y-H2O', gain:0.49, loss:-0.07}
+  ];
+  let total = 0, prefixTotal = 0, suffixTotal = 0;
+  let lines = '<strong>Prefix ions:</strong>\n';
+  prefixIons.forEach(ion => {
+    const det = document.getElementById(ion.id).value === '1';
+    const val = det ? ion.gain : ion.loss;
+    prefixTotal += val;
+    lines += `  ${ion.name}: ${det?'DETECTED':'missing'} => ${val > 0 ? '+' : ''}${val.toFixed(2)}\n`;
+  });
+  lines += `  Prefix subtotal: ${prefixTotal.toFixed(2)}\n\n<strong>Suffix ions:</strong>\n`;
+  suffixIons.forEach(ion => {
+    const det = document.getElementById(ion.id).value === '1';
+    const val = det ? ion.gain : ion.loss;
+    suffixTotal += val;
+    lines += `  ${ion.name}: ${det?'DETECTED':'missing'} => ${val > 0 ? '+' : ''}${val.toFixed(2)}\n`;
+  });
+  total = prefixTotal + suffixTotal;
+  lines += `  Suffix subtotal: ${suffixTotal.toFixed(2)}\n\n`;
+  lines += `<strong>Prefix-only score: ${prefixTotal.toFixed(2)}</strong>\n`;
+  lines += `<strong>Total (prefix + suffix): ${total.toFixed(2)}</strong>`;
+  document.getElementById('sc-r').innerHTML = lines;
+}
+</script>
+</body>
+</html>
